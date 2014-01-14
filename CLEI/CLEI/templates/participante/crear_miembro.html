@@ -7,12 +7,16 @@
 
 {% endblock %}
 
+{% block script %}
+
+{% endblock %}
+
 {% block contenido %}
 
 <form id = "formulario" action="" enctype='multipart/form-data' method="POST">{% csrf_token %}
 	{{ formulario.as_p }}
-	<input type="submit" name="submit" value="Crear Miembro"/>
-	<input type="reset" value="Limpiar" />
+	<input type="submit" name="submit" value="Crear Miembro" class="buttons"/> 
+	<input type="reset" value="Limpiar"  class="buttons"/>
 </form>
 
 {% endblock %}

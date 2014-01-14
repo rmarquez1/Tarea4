@@ -5,7 +5,7 @@ from CLEI.apps.participante.models import Autor, MiembroComite
 class Topico(models.Model):
     nombre_topico = models.CharField(max_length=50, primary_key=True, verbose_name='Nombre del Tópico')
     
-    def __str__(self):
+    def __unicode__(self):
 	return self.nombre_topico
 	
 # Create your models here.
@@ -23,7 +23,7 @@ class Articulo(models.Model):
     p5 = models.CharField(max_length=30, verbose_name = 'Palabra Clave 5', blank=True)
     # COLOCAR ESTADOS DE SELECCION
     
-    def __str__(self):
+    def __unicode__(self):
 	return str(self.id_articulo)
 	
 class Puntuacion(models.Model):

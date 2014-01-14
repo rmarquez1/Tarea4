@@ -19,10 +19,12 @@ def nuevo_miembro(request):
 	formulario = MiembroComiteForm(request.POST)
 	if formulario.is_valid():
 	    formulario.save()
-	    return HttpResponseRedirect('/admin')
+	    return HttpResponseRedirect('/participante/miembro/create')
     else:
 	formulario = MiembroComiteForm()
-    return render_to_response('participante/crear_miembro.html', {'formulario':formulario}, context_instance= RequestContext(request))
+    return render_to_response('participante/crear_miembro.html', 
+			      {'formulario':formulario},
+			      context_instance= RequestContext(request))
     
 def nuevo_autor(request):
     if request.method == 'POST':

@@ -15,8 +15,8 @@
 
 <form id = "formulario" action="" enctype='multipart/form-data' method="POST">{% csrf_token %}
 	{{ formulario.as_p }}
-	<input type="submit" name="submit" value="Asignar Puntuación"/>
-	<input type="reset" value="Limpiar" />
+	<input type="submit" name="submit" value="Asignar Puntuación" class="buttons"/>
+	<input type="reset" value="Limpiar" class="buttons"/>
 </form>
 
 {% endblock %}

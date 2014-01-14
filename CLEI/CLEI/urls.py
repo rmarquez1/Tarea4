@@ -12,7 +12,6 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^articulo/', include('CLEI.apps.articulo.urls')),
-     url(r'^topico/', include('CLEI.apps.articulo.urls')),
     url(r'^participante/', include('CLEI.apps.participante.urls')),
 )
 urlpatterns += patterns('',

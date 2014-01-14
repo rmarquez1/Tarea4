@@ -11,8 +11,48 @@
 	<link rel='stylesheet' href='{{STATIC_URL}}css/base.css'>
 	<link rel='shortcut icon' href='{{STATIC_URL}}img/icono.png'>
 	{% block style_css %}{% endblock %}
+	{% block script %}{% endblock %}
 	<script src='{{STATIC_URL}}js/jquery-1.7.2.min.js'></script>
 	<script src='{{STATIC_URL}}js/demo.js'></script>
+	<style type="text/css">
+	    .menu{
+		list-style:none;
+		    padding:0px;
+		    margin:0px;
+	    }
+	    .menu ul{
+		    margin:0px;
+		    padding:0px;
+		    float:left;
+		    position:relative;
+		    box-shadow: 2px 2px 4px 1px #000;
+		    background-color:red;	
+	    }
+	    .menu li a{
+		    display: block;
+		    width: 200px;
+		    height: 30px;
+		    padding: 6px;
+		    line-height:30px;
+		    text-decoration: none;
+		    text-align: center;
+		    color: #FFF;
+		    background-color:#49afcd;
+		    position: relative;
+		    border-left: 2px solid #333;
+	    
+	    }
+	    .menu li a:hover{
+		    color:black;
+		    background-color:white;
+	    }
+	    .buttons { 
+		    background: #49afcd; 
+		    padding: 10px; 
+		    color: #FFFFFF;
+	    }
+	</style>
+
     </head>
     <body>
 
@@ -20,20 +60,22 @@
 	
 	<!-- Banner -->
 	<center>
-	    <img src="{{ MEDIA_URL }}banner.png"  />
+	    <img src="{{ MEDIA_URL }}clei.png" width="70%" />
 	</center>
 	
 	<center>
-	    <table width="90%" bgcolor="#fffff" frame="lhs" frame="rhs">
+	    <table width="70%" bgcolor="#ffffff" frame="lhs" frame="rhs">
 		<tr>
 		    <!-- Barra izquierda -->
-		    <td colspan="2">
+		    <td colspan="2" width="15%">
 			<nav>
-				<ul class="nav nav-pills nav-stacked">
+				<ul class="menu">
 				    <li><a href='/admin'>Inicio</a></li>
 				    <li><a href='/articulo/create'>Crear Articulo</a></li>
 				    <li><a href='/participante/miembro/create'>Crear Miembros</a></li>
 				    <li><a href='/participante/autor/create'>Crear Autores</a></li>
+				    <li><a href='/articulo/topico/create'>Crear Tópicos</a></li>
+				    <li><a href='/articulo/asignar'>Asignar Puntuaciones</a></li>
 				</ul>
 			</nav>
 		    </td>
@@ -48,9 +90,6 @@
 			    {% block contenido %}{% endblock %}
 			</div>
 		    <!-- Barra derecha -->
-		    </td>
-		    <td colspan="2">
-			{% block barrader %}{% endblock %}
 		    </td>
 		</tr>
 	    </table>

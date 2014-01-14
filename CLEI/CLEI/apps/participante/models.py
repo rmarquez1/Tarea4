@@ -15,7 +15,7 @@ class Persona(models.Model):
 class Autor(Persona):
     pais = models.CharField(max_length=20)
     
-    def __str__(self):
+    def __unicode__(self):
 	return str(self.correo)
 	
 class MiembroComite(Persona):
@@ -27,5 +27,5 @@ class MiembroComite(Persona):
 	    return True
 	return False
     
-    def __str__(self):
+    def __unicode__(self):
 	return str(self.correo)
