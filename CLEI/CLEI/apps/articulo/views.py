@@ -36,3 +36,5 @@ def asignar_puntuacion(request):
 	formulario = PuntuacionForm()
     return render_to_response('articulo/asignar_puntuacion.html', {'formulario':formulario}, context_instance= RequestContext(request))
     
+
+    

@@ -2,7 +2,56 @@
 
 /* ==========================================================================
    Author's custom styles
-   ========================================================================== */
+========================================================================== */
+.menu{
+    list-style:none;
+	padding:0px;
+	margin:0px;
+}
+.menu ul{
+	margin:0px;
+	padding:0px;
+	float:left;
+	position:relative;
+	box-shadow: 2px 2px 4px 1px #000;
+	background-color:red;	
+}
+.menu li a{
+	display: block;
+	width: 200px;
+	height: 30px;
+	padding: 6px;
+	line-height:30px;
+	text-decoration: none;
+	text-align: center;
+	color: #FFF;
+	background-color:#49afcd;
+	position: relative;
+	border-left: 2px solid #333;
+
+}
+.menu li a:hover{
+	color:black;
+	background-color:white;
+}
+.buttons { 
+	background: #49afcd; 
+	padding: 10px; 
+	color: #FFFFFF;
+}
+ul.errorlist {
+    margin: 0;
+    padding: 0;
+}
+.errorlist li {
+    background-color: red;
+    color: white;
+    display: block;
+    font-size: 15px;
+    margin: 0 0 3px;
+    padding: 4px 5px;
+}
+
 
 
 

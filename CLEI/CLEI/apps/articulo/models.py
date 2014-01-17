@@ -31,7 +31,8 @@ class Puntuacion(models.Model):
     id_articulo = models.ForeignKey(Articulo)
     puntuacion = models.FloatField(default=0.0, verbose_name='Puntuación')
     
+    def __unicode__(self):
+	return str(self.id_articulo)
+	
     class Meta:
 	unique_together = ("correo","id_articulo")
-    
-

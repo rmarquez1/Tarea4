@@ -1,3 +1,4 @@
+#encoding:utf-8
 from django import forms
 from .models import Autor, MiembroComite
 
@@ -17,7 +18,7 @@ class MiembroComiteForm(forms.ModelForm):
 	    p = MiembroComite.objects.filter(es_presidente=True).count()
 	
 	    if p == 1:
-		raise forms.ValidationError("Ya existe Presidente en el comite")
+		raise forms.ValidationError("Ya existe Presidente en el comité")
 	
 	return existe
 	
