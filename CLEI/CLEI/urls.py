@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'CLEI.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'^$', include('CLEI.apps.inicio.urls')),
+    url(r'^', include('CLEI.apps.inicio.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^articulo/', include('CLEI.apps.articulo.urls')),
     url(r'^participante/', include('CLEI.apps.participante.urls')),

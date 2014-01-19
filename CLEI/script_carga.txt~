@@ -1,0 +1,100 @@
+from CLEI.apps.articulo.models import Topico, Articulo, Puntuacion
+from CLEI.apps.participante.models import Autor, MiembroComite
+
+# -----------------------------------------------------------------------------
+                                TOPICOS
+# -----------------------------------------------------------------------------
+
+p = Topico(nombre_topico='Ingeniería')
+p.save()
+
+p = Topico(nombre_topico='Software')
+p.save()
+
+p = Topico(nombre_topico='Informática')
+p.save()
+
+p = Topico(nombre_topico='Información')
+p.save()
+
+p = Topico(nombre_topico='Software propietario')
+p.save()
+
+# -----------------------------------------------------------------------------
+                                AUTORES
+# -----------------------------------------------------------------------------
+
+p = Autor(username='lgonzalez', password='lgonzalez', correo='lgonzalez@gmail.com',
+      nombre='Lestsael', apellido='González', inst_afil='USB', pais='Venezuela')
+      
+p.save()
+
+p = Autor(username='gmartinez', password='gmartinez', correo='gmartinez@gmail.com',
+      nombre='Gabriel', apellido='Martínez', inst_afil='USB', pais='Venezuela')
+      
+p.save()
+
+p = Autor(username='rmartinez', password='rmartinez', correo='rmartinez@gmail.com',
+      nombre='Raquel', apellido='Márquez', inst_afil='UCV', pais='Canadá')
+      
+p.save()
+
+p = Autor(username='jortiz', password='jortiz', correo='jortiz@gmail.com',
+      nombre='José', apellido='Ortiz', inst_afil='UCV', pais='Canadá')
+      
+p.save()
+
+p = Autor(username='cgarce', password='cgarce', correo='cgarce@gmail.com',
+      nombre='Carla', apellido='Garce', inst_afil='USB', pais='Brasil')
+      
+p.save()
+
+# -----------------------------------------------------------------------------
+                                ARTICULOS
+# -----------------------------------------------------------------------------
+
+p = Articulo(id_articulo=1, titulo='Ingeniería de software', resumen='Resumen',
+             texto='Texto', autores='lgonzalez@gmail.com', topicos='Ingeniería',
+             p1='ingeniería', p2='software')
+p.save()
+
+p = Articulo(id_articulo=2, titulo='Embarazo', resumen='Resumen',
+             texto='Texto', autores='gmartinez@gmail.com', topicos='Salud',
+             p1='embarazo', p2='mujer')
+p.save()
+
+p = Articulo(id_articulo=3, titulo='Sistema de Información', resumen='Resumen',
+             texto='Texto', autores='rmartinez@gmail.com', topicos='Información',
+             p1='sistema', p2='información', p3='stakeholders')
+p.save()
+
+p = Articulo(id_articulo=4, titulo='Software Libre vs Software Propietario', resumen='Resumen',
+             texto='Texto', autores='jortiz@gmail.com', topicos='Informática',
+             p1='software libre', p2='software propietario')
+p.save()
+
+p = Articulo(id_articulo=5, titulo='Base de datos', resumen='Resumen',
+             texto='Texto', autores='cgarce@gmail.com', topicos='Informática',
+             p1='base de datos')
+p.save()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

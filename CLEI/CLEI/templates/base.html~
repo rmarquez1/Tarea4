@@ -21,7 +21,7 @@
 	<center>
 	    <img src="{{ MEDIA_URL }}clei.png" width="70%" />
 	</center>
-	
+
 	<center>
 	    <table width="70%" bgcolor="#ffffff" frame="lhs" frame="rhs">
 		<tr>
@@ -30,19 +30,15 @@
 			<nav>
 			    <ul class="menu">
 				<li><a href='/'>Inicio</a></li>
-				<li><a href='/articulo/create'>Crear Articulo</a></li>
-				<li><a href='/participante/miembro/create'>Crear Miembros</a></li>
-				<li><a href='/participante/autor/create'>Crear Autores</a></li>
-				<li><a href='/articulo/topico/create'>Crear Tópicos</a></li>
-				
 			    </ul>
-			</nav>
+			{% block barraizquierda %}{% endblock %}
 		    </td>
 		    <!-- Parte central -->
 		    <td colspan="3">
 			<div class="jumbotron">
 			<div class="container">
 			<div>
+			    {% block sesion %}{% endblock %}
 			    {% block encabezado %}{% endblock %}
 			</div>
 			<div>

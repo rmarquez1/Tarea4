@@ -57,6 +57,7 @@ ROOT_URLCONF = 'CLEI.urls'
 
 WSGI_APPLICATION = 'CLEI.wsgi.application'
 
+AUTH_PROFILE_MODULE = 'CLEI.apps.participante.MiembroComite'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases

@@ -11,7 +11,7 @@ def nuevo_articulo(request):
 	formulario = ArticuloForm(request.POST)
 	if formulario.is_valid():
 	    formulario.save()
-	    return HttpResponseRedirect('/admin')
+	    return HttpResponseRedirect('/articulo/create')
     else:
 	formulario = ArticuloForm()
     return render_to_response('articulo/crear_articulo.html', {'formulario':formulario}, context_instance= RequestContext(request))
@@ -21,7 +21,7 @@ def nuevo_topico(request):
 	formulario = TopicoForm(request.POST)
 	if formulario.is_valid():
 	    formulario.save()
-	    return HttpResponseRedirect('/admin')
+	    return HttpResponseRedirect('/articulo/topico/create')
     else:
 	formulario = TopicoForm()
     return render_to_response('articulo/crear_topico.html', {'formulario':formulario}, context_instance= RequestContext(request))  
@@ -31,7 +31,7 @@ def asignar_puntuacion(request):
 	formulario = PuntuacionForm(request.POST)
 	if formulario.is_valid():
 	    formulario.save()
-	    return HttpResponseRedirect('/admin')
+	    return HttpResponseRedirect('/articulo/asignar')
     else:
 	formulario = PuntuacionForm()
     return render_to_response('articulo/asignar_puntuacion.html', {'formulario':formulario}, context_instance= RequestContext(request))

@@ -11,7 +11,7 @@ class Topico(models.Model):
 # Create your models here.
 class Articulo(models.Model):
     id_articulo = models.IntegerField(primary_key=True)
-    titulo = models.CharField(max_length=100, verbose_name='Título')
+    titulo = models.CharField(max_length=100, verbose_name='Título', help_text='Título del artículo')
     resumen = models.TextField()
     texto = models.TextField()
     autores = models.ManyToManyField(Autor, verbose_name='Autor(es)')
@@ -29,12 +29,10 @@ class Articulo(models.Model):
 class Puntuacion(models.Model):
     correo = models.ForeignKey(MiembroComite)
     id_articulo = models.ForeignKey(Articulo)
-    puntuacion = models.FloatField(default=0.0, verbose_name='Puntuación')
+    puntuacion = models.IntegerField(choices=[(x,x) for x in range(1,6)], verbose_name='Puntuación')
     
     def __unicode__(self):
 	return str(self.id_articulo)
 	
     class Meta:
 	unique_together = ("correo","id_articulo")
-    
-

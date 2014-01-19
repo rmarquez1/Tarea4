@@ -7,16 +7,25 @@
 
 {% endblock %}
 
-{% block barrader%}
-    <h2> Barra Derecha</h2>
-{% endblock %}    
+{% block barraizquierda %}
+<nav>
+    <ul class="menu">
+	<li><a href='/'>Inicio</a></li>
+	<li><a href='/articulo/create'>Crear Articulo</a></li>
+	<li><a href='/participante/miembro/create'>Crear Miembros</a></li>
+	<li><a href='/participante/autor/create'>Crear Autores</a></li>
+	<li><a href='/articulo/topico/create'>Crear Tópicos</a></li>
+	<li><a href='/articulo/asignar'>Asignar Puntuaciones</a></li>
+    </ul>
+</nav>
+{% endblock %}
 
 {% block contenido %}
 
 <form id = "formulario" action="" enctype='multipart/form-data' method="POST">{% csrf_token %}
 	{{ formulario.as_p }}
-	<input type="submit" name="submit" value="Crear Tópico"/>
-	<input type="reset" value="Limpiar" />
+	<input type="submit" name="submit" value="Crear Tópico" class="buttons"/>
+	<input type="reset" value="Limpiar" class="buttons"/>
 </form>
 
 {% endblock %}

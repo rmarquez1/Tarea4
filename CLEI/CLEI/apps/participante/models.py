@@ -4,13 +4,16 @@ from django.db import models
 
 # Create your models here.
 class Persona(models.Model):
-    correo = models.EmailField(primary_key=True)
-    nombre = models.CharField(max_length=30)
-    apellido = models.CharField(max_length=30)
-    inst_afil = models.CharField(max_length=30, verbose_name='Institución afiliada')
+    username = models.CharField(max_length=30, unique=False)
+    password = models.CharField(max_length=60, unique=False)
+    correo = models.EmailField(unique=False)
+    nombre = models.CharField(max_length=30, unique=False)
+    apellido = models.CharField(max_length=30, unique=False)
+    inst_afil = models.CharField(max_length=30, unique=False, verbose_name='Institución afiliada')
     
     class Meta:
 	abstract = True
+	unique_together = ("username", "correo")
 
 class Autor(Persona):
     pais = models.CharField(max_length=20)
@@ -20,12 +23,6 @@ class Autor(Persona):
 	
 class MiembroComite(Persona):
     es_presidente = models.BooleanField()
-    
-    def hay_presidente(self):
-	p = self.objects.filter(es_presidente=True).count()
-	if p != 0:
-	    return True
-	return False
     
     def __unicode__(self):
 	return str(self.correo)
