@@ -41,3 +41,5 @@ def nuevo_autor(request):
     else:
 	formulario = AutorForm()
     return render_to_response('participante/crear_autor.html', {'formulario':formulario}, context_instance= RequestContext(request))
+
+    

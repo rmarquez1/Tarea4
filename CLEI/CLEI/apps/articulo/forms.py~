@@ -6,6 +6,30 @@ from .models import Articulo, Puntuacion, Topico
 class ArticuloForm(forms.ModelForm):
     class Meta:
 	model = Articulo
+    
+    def get_aceptables(self):
+    # creamos la lista de los articulos aceptables
+	aceptables=[]
+	p = Puntuacion.objects.all()
+	tam = len(p)
+	for i in range(tam):
+	    if Puntuacion.objects.filter(id_articulo=p[i].id_articulo_id).count()>=2:
+		if p[i].puntuacion>=3:
+		    aceptables.append(p[i])
+	return aceptables
+	
+    def get_evaluaciones(self):
+	evaluaciones = []
+	promedio = 0
+	articulos = Articulo.objects.all()
+	puntuacion = Puntuacion.objects.all()
+	tam_articulos = len(articulos)
+	tam_puntuacion = len(puntuacion)
+	for i in range(tam_articulos):
+	    suma = 0
+	    for j in range(tam_puntuacion):
+		if a[i]==puntuacion[j].id_articulo:
+		    suma = suma + puntuacion
 	
 class TopicoForm(forms.ModelForm):
     class Meta:
@@ -14,3 +38,11 @@ class TopicoForm(forms.ModelForm):
 class PuntuacionForm(forms.ModelForm):
     class Meta:
 	model = Puntuacion
+	
+    def clean_puntuacion(self):
+	puntaje = self.cleaned_data['puntuacion']
+	
+	if puntaje<1.0 or puntaje>5.0:
+	    raise forms.ValidationError("El puntaje es de 1 a 5")
+	
+	return puntaje

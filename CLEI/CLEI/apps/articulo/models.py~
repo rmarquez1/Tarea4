@@ -23,13 +23,34 @@ class Articulo(models.Model):
     p5 = models.CharField(max_length=30, verbose_name = 'Palabra Clave 5', blank=True)
     # COLOCAR ESTADOS DE SELECCION
     
+    def get_aceptables(self):
+    # creamos la lista de los articulos aceptables
+	aceptables=[]
+	p = Puntuacion.objects.all()
+	tam = len(p)
+	for i in range(tam):
+	    if Puntuacion.objects.filter(id_articulo=p[i].id_articulo_id).count()>=2:
+		if p[i].puntuacion>=3:
+		    aceptables.append(p[i])
+	return aceptables
+	
+    def calcular_promedio(self):
+	promedio = 0
+	articulos = Articulo.objects.all()
+	puntuacion = Puntuacion.objects.all()
+	tam_articulos = len(articulos)
+	tam_puntuacion = len(puntuacion)
+	for i in range(tam_articulos):
+	    for j in range(tam_puntuacion):
+		if
+		    
     def __unicode__(self):
 	return str(self.id_articulo)
 	
 class Puntuacion(models.Model):
     correo = models.ForeignKey(MiembroComite)
     id_articulo = models.ForeignKey(Articulo)
-    puntuacion = models.IntegerField(choices=[(x,x) for x in range(1,6)], verbose_name='Puntuación')
+    puntuacion = models.FloatField(default=0.0	, verbose_name='Puntuación')
     
     def __unicode__(self):
 	return str(self.id_articulo)

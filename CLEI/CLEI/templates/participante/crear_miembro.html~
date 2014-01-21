@@ -14,7 +14,7 @@
 {% block barraizquierda %}
 <nav>
     <ul class="menu">
-	<li><a href='/'>Inicio</a></li>
+	<li><a href='/privado/presidente'>Inicio</a></li>
 	<li><a href='/articulo/create'>Crear Articulo</a></li>
 	<li><a href='/participante/miembro/create'>Crear Miembros</a></li>
 	<li><a href='/participante/autor/create'>Crear Autores</a></li>

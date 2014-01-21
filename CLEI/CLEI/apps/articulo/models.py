@@ -23,13 +23,15 @@ class Articulo(models.Model):
     p5 = models.CharField(max_length=30, verbose_name = 'Palabra Clave 5', blank=True)
     # COLOCAR ESTADOS DE SELECCION
     
+
+		    
     def __unicode__(self):
 	return str(self.id_articulo)
 	
 class Puntuacion(models.Model):
     correo = models.ForeignKey(MiembroComite)
     id_articulo = models.ForeignKey(Articulo)
-    puntuacion = models.IntegerField(choices=[(x,x) for x in range(1,6)], verbose_name='Puntuación')
+    puntuacion = models.FloatField(default=0.0	, verbose_name='Puntuación')
     
     def __unicode__(self):
 	return str(self.id_articulo)

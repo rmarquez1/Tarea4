@@ -10,8 +10,8 @@ def mostrar_aceptables(request):
     # creamos la lista de los articulos aceptables
     num = request.POST
     print num
-    num_articulos = int(num['articulos'])
-    clei=Clei(num_articulos)
+    #num_articulos = int(num['articulos'])
+    clei=Clei(3)
     clei.crear_aceptables()
     promedios = clei.listar_promedios(clei.get_aceptables())
     limite = clei.crear_aceptados_empatados(promedios, clei.get_aceptables())
