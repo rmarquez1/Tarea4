@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>CLEI - {% block titulo %}{% endblock %}</title>
+	<link rel='stylesheet' href='{{STATIC_URL}}css/main.css'>
+	<link rel='shortcut icon' href='{{STATIC_URL}}img/icono.png'>
+	{% block style_css %}{% endblock %}
+	{% block script %}{% endblock %}
+	<script src='{{STATIC_URL}}js/jquery-1.7.2.min.js'></script>
+	<script src='{{STATIC_URL}}js/demo.js'></script>
+
+    </head>
+    <body>
+	<!-- Banner -->
+	<center>
+	    <img src="{{ MEDIA_URL }}clei.png" width="70%" />
+	</center>
+
+	<center>
+	    <table width="70%" bgcolor="#ffffff" frame="lhs" frame="rhs">
+		<tr>
+		    <!-- Barra izquierda -->
+		    <td  width="20%">
+			<nav>
+			    <ul class="menu">
+				<li><a href='/privado/presidente'>Inicio</a></li>
+				<li><a href='/articulo/create'>Crear Articulo</a></li>
+				<li><a href='/participante/miembro/create'>Crear Miembros</a></li>
+				<li><a href='/participante/autor/create'>Crear Autores</a></li>
+				<li><a href='/articulo/topico/create'>Crear Tópicos</a></li>
+				<li><a href='/articulo/asignar/presidente'>Asignar Puntuaciones</a></li>
+				<li><a href='/clei/cantArticulos'>Selección Artículos Desempate</a></li>
+			    </ul>
+			</nav>
+		    </td>
+		    <!-- Parte central -->
+		    <td colspan="3">
+			<div class="jumbotron">
+			<div class="container">
+			<div>
+			    {% block sesion %}{% endblock %}
+			    {% block encabezado %}{% endblock %}
+			</div>
+			<div>
+			    {% block contenido %}{% endblock %}
+			</div>
+		    <!-- Barra derecha -->
+		    </td>
+		</tr>
+	    </table>
+	</center>
+	<hr>
+	<footer>
+	    <center>&copy; <strong>INNOVA 2014</strong></center>
+	</footer>
+    
+    </body>
+</html>

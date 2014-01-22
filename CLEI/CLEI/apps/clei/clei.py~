@@ -4,8 +4,8 @@ from CLEI.apps.articulo.models import Articulo, Topico, Puntuacion
 
 # Create your models here.
 class Clei():
-    def __init__(self, num_articulos=None):
-	self.num_articulos = num_articulos
+    def __init__(self):
+	self.num_articulos = 0
         self.aceptables = []
         self.aceptables1 = []
         self.aceptados = []
@@ -31,6 +31,10 @@ class Clei():
     def get_empatados(self):
         return self.empatados
         
+    # Asigna la cantidad de articulos al congreso
+    def set_num_articulos(self, num_articulos):
+	self.num_articulos = num_articulos
+	
     # Metodo que inserta una tupla (idArticulo, promedio) en la lista de los 
     # aceptables
     def set_aceptables(self, id_articulo, promedio):
@@ -50,7 +54,7 @@ class Clei():
 	articulos = Articulo.objects.all()
 	tam_articulos = len(articulos)
 	for i in range(tam_articulos):
-	    self.articulos[articulos.id_articulo] = articulos[i]
+	    self.articulos[articulos[i].id_articulo] = articulos[i]
   
     def listar_puntuacion_por_articulo(self, id_articulo):
 	lista = []
@@ -61,7 +65,7 @@ class Clei():
 		lista.append(puntuacion[i].puntuacion)
 	return lista
   
-    def get_evaluaciones(self):
+    def agregar_evaluaciones(self):
 	promedio = 0
 	articulos = Articulo.objects.all()
 	puntuacion = Puntuacion.objects.all()
@@ -79,7 +83,7 @@ class Clei():
 		self.evaluaciones[articulos[i].id_articulo] = promedio
 	    
     def crear_aceptables(self):
-	self.get_evaluaciones()
+	self.agregar_evaluaciones()
 	print self.evaluaciones
 	if len(self.evaluaciones) != 0:
 	    lista_evaluaciones = self.evaluaciones.items()
@@ -178,14 +182,21 @@ class Clei():
 	    lista.append(Articulo.objects.filter(id_articulo=self.get_aceptados()[i]))
 	articulos = []
 	for i in range(len(lista)):
-	    articulos.append(lista[i][0])
+	    res = lista[i][0] in articulos.id_articulo
+	    if res == False:
+		articulos.append(lista[i][0])
 	return articulos
 	
     def guardar_empatados(self):
 	lista = []
 	for i in range(len(self.get_empatados())):
-	    lista.append(Articulo.objects.filter(id_articulo=self.get_aceptados()[i]))
+	    lista.append(Articulo.objects.filter(id_articulo=self.get_empatados()[i]))
 	articulos = []
 	for i in range(len(lista)):
 	    articulos.append(lista[i][0])
 	return articulos
+	
+    # Esquema de seleccion por desempate
+    def seleccionar_desempate(self, id):
+        if id in self.get_empatados():
+            self.set_aceptados(id)

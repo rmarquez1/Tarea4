@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Crear Articulo{% endblock %}
+
+{% block encabezado %}
+    <h1 style="display: block; font-size: 20px; padding: 10px; margin-left: 0; -webkit-border-radius: 4px; border-radius: 4px; color: white; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); background-color: #49afcd; background-image: -moz-linear-gradient(top,#5BC0DE, #2F96B4 );">Selección por desempate</h1>
+
+{% endblock %}
+
+{% block barraizquierda %}
+<nav>
+    <ul class="menu">
+	<li><a href='/privado/presidente'>Inicio</a></li>
+	<li><a href='/articulo/create'>Crear Articulo</a></li>
+	<li><a href='/participante/miembro/create'>Crear Miembros</a></li>
+	<li><a href='/participante/autor/create'>Crear Autores</a></li>
+	<li><a href='/articulo/topico/create'>Crear Tópicos</a></li>
+	<li><a href='/articulo/asignar/presidente'>Asignar Puntuaciones</a></li>
+    </ul>
+</nav>
+{% endblock %}
+{% block contenido %}
+
+<p> Artículos aceptados: </p>
+<table>
+    <tr>
+	<td align="center"><strong> ID </strong></td>
+	<td align="center"><strong> Título </strong></td>
+    <tr>
+    {% for item in lista_aceptados %}
+    <tr>
+	<td>{{item.id_articulo}}</td>
+	<td>{{item.titulo}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% if limite >= 0 %}
+<p>Seleccione de los siguientes artículos que quedaron empatados, {{limite}}</p>
+
+    <form id = "formulario" action="/clei/aceptadosEmpatados" method="POST">{% csrf_token %}
+    {% for item in lista_empatados %}
+	<input type="checkbox" name="empatados" id="option{{item.}}" value={{item}} />
+	<label for="option{{item}}"><b>{{item.titulo}}</b></label><br/>
+    {% endfor %}
+	<input type="submit" name="submit" value="Seleccionar" class="buttons"/>
+    </form>
+
+{% endif %}
+
+{% endblock %}

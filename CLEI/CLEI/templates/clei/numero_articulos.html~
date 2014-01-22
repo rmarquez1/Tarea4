@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_presidente.html' %}
 
 {% block titulo %}Crear Articulo{% endblock %}
 
@@ -28,51 +28,4 @@
 	<input type="reset" value="Limpiar" class="buttons"/>
 </form>
 
-<p> Los artículos que fueron aceptados son: </p>
-<table>
-    <tr>
-	<td align="center"><strong> Articulo </strong></td>
-	<td align="center"><strong> Puntuación </strong></td>
-    </tr>
-    {% for item in lista_aceptados %}
-    
-    <tr>
-	<td>
-	    {{item.titulo}}
-	</td>
-	<td>
-	    {{item.resumen}}
-	</td>
-	<td>
-	    {{num_articulos}}
-	</td>
-    </tr>
-    {% endfor %}
-</table>
-
-{% if limite != 0 %}
-<p> Los artículos empatados son: </p>
-<table>
-    <tr>
-	<td align="center"><strong> Articulo </strong></td>
-	<td align="center"><strong> Puntuación </strong></td>
-    </tr>
-    {% for item in lista_empatados %}
-    
-    <tr>
-	<td>
-	    <form id = "formulario" action="" method="POST">{% csrf_token %}
-		<input type="checkbox" name="titulo" value="{{item.titulo}}"> {{item.titulo}}<br>
-	    </form>
-	</td>
-	<td>
-	    {{item.resumen}}
-	</td>
-	<td>
-	    {{num_articulos}}
-	</td>
-    </tr>
-    {% endfor %}
-</table>
-{% endif %}
 {% endblock %}

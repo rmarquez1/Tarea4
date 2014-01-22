@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_presidente.html' %}
 
 {% block titulo %}Asignar Puntuación{% endblock %}
 
@@ -11,7 +11,7 @@
 <nav>
     <ul class="menu">
 	<li><a href='/privado/presidente'>Inicio</a></li>
-	<li><a href='asignar/presidente'>Asignar Puntuaciones</a></li>
+	<li><a href='/articulo/asignar/presidente'>Asignar Puntuaciones</a></li>
     </ul>
 </nav>
 {% endblock %}  
