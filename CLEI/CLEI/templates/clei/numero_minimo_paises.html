@@ -1,0 +1,42 @@
+{% extends 'base_presidente.html' %}
+
+{% block titulo %}Crear Articulo{% endblock %}
+
+{% block encabezado %}
+    <h1 style="display: block; font-size: 20px; padding: 10px; 
+               margin-left: 0; -webkit-border-radius: 4px; 
+               border-radius: 4px; color: white; 
+               text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+               background-color: #49afcd; 
+               background-image: -moz-linear-gradient(top,#5BC0DE, #2F96B4 );">
+               Número Mínimo de artículos por País
+    </h1>
+
+{% endblock %}
+
+{% block contenido %}
+<script type="text/javascript">
+    function valida_envia(numero_paises){
+	System.out.println("Es mayor de edad");
+	num = document.fvalida.articulos.value
+	num_minimo = document.fvalida.minimo.value
+	valor = num_minimo * numero_paises
+	if valor > num{
+	    alert("El numero minimo de paises por la cantidad de paises debe ser menor o igual al número de artículo")
+	    document.fvalida.num_minimo.focus()
+	    return 0;
+	}
+    }
+</script>
+
+<form name="fvalida" id = "formulario" action="" enctype='multipart/form-data' method="POST">{% csrf_token %}
+	<label for="num_articulos">Número de Artículos:</label>
+	<input id="num_articulos" type="number" name="articulos"/><br>
+
+	<label for="num_minimo">Número mínimo:</label>
+	<input id="num_minimo" type="number" name="minimo"/>
+	<input type="submit" onclick="valida_envia()" value="Seleccionar" class="buttons"/>
+	<input type="reset" value="Limpiar" class="buttons"/>
+</form>
+
+{% endblock %}

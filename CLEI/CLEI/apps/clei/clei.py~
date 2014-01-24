@@ -1,7 +1,7 @@
 from django import forms
 
 from CLEI.apps.articulo.models import Articulo, Topico, Puntuacion
-
+from CLEI.apps.participante.models import Autor, MiembroComite
 # Create your models here.
 class Clei():
     def __init__(self):
@@ -51,11 +51,21 @@ class Clei():
         
     # Metodo que crea el diccionario de articulos
     def crear_articulos(self):
-	articulos = Articulo.objects.all()
-	tam_articulos = len(articulos)
+	a = Articulo.objects.all()
+	tam_articulos = len(a)
 	for i in range(tam_articulos):
-	    self.articulos[articulos[i].id_articulo] = articulos[i]
-  
+	    self.articulos[a[i].id_articulo] = a[i]
+	    
+    def limpiar_aceptados(self):
+	self.aceptados = []
+
+    def limpiar_aceptables(self):
+	self.aceptados = []
+	
+    def limpiar_empatados(self):
+	self.aceptados = []
+	
+	
     def listar_puntuacion_por_articulo(self, id_articulo):
 	lista = []
 	puntuacion = Puntuacion.objects.all()
@@ -81,10 +91,16 @@ class Clei():
 		    suma += lista[j]
 		promedio = float(suma) / tam
 		self.evaluaciones[articulos[i].id_articulo] = promedio
-	    
+	
+	
+    # -------------------------------------------------------------------------
+    # SELECCION POR DESEMPATE
+    # -------------------------------------------------------------------------
+    
+    # Metodo que agrega a la lista aquellos articulos que son considerados
+    # como aceptables
     def crear_aceptables(self):
 	self.agregar_evaluaciones()
-	print self.evaluaciones
 	if len(self.evaluaciones) != 0:
 	    lista_evaluaciones = self.evaluaciones.items()
 	    lista_evaluaciones.sort(key=lambda x:x[1])
@@ -182,7 +198,7 @@ class Clei():
 	    lista.append(Articulo.objects.filter(id_articulo=self.get_aceptados()[i]))
 	articulos = []
 	for i in range(len(lista)):
-	    res = lista[i][0] in articulos.id_articulo
+	    res = lista[i][0] in articulos
 	    if res == False:
 		articulos.append(lista[i][0])
 	return articulos
@@ -193,6 +209,7 @@ class Clei():
 	    lista.append(Articulo.objects.filter(id_articulo=self.get_empatados()[i]))
 	articulos = []
 	for i in range(len(lista)):
+	    res = lista[i][0] in articulos
 	    articulos.append(lista[i][0])
 	return articulos
 	
@@ -200,3 +217,168 @@ class Clei():
     def seleccionar_desempate(self, id):
         if id in self.get_empatados():
             self.set_aceptados(id)
+            
+    # -------------------------------------------------------------------------
+    # SELECCION POR PAIS
+    # -------------------------------------------------------------------------
+    
+    # Retorna una lista con los ids de los articulos pertenecientes a la lista
+    # de aceptables
+    def listar_id_aceptables(self):
+        lista_id_articulos = []
+        # Ciclo que agrega a la lista de articulos los ids de los articulos
+        # pertenecientes a la lista de aceptables
+        for i in range(len(self.aceptables)):
+            lista_id_articulos.append(self.aceptables[i][0])
+        return lista_id_articulos
+        
+        
+    # Generamos una lista con todos los paises del congreso que enviaron sus
+    # articulos al congreso
+    def paises_conferencia(self):
+        lista_paises = []
+	
+        lista_id_articulos = self.listar_id_aceptables()
+        print 'lista id: ', lista_id_articulos    
+        tam_articulos = len(lista_id_articulos)
+        print tam_articulos
+        # Ciclo que recorre la lista de articulos aceptables con cada id y 
+        # asigna el pais de los articulos que estan de primero en la lista de 
+        # autores de cada articulo
+        for i in range(tam_articulos):
+            # Obtenemos la lista de los autores del articulo i
+            autor = self.articulos[lista_id_articulos[i]].autores.all()
+            # Obtenemos el pais del primer autor de la lista
+            pais = autor[0].pais
+            # Si no esta el pais en la lista de articulos
+            esta_pais = pais in lista_paises
+            if  esta_pais == False:
+                lista_paises.append(pais)
+                
+        return lista_paises
+        
+    # Retorna una lista con las notas de los articulos presentados por un pais
+    # dado y que pertenece a la lista de aceptables
+    def listar_notas_por_pais(self, pais):
+        lista_notas = []
+        tam_aceptables = len(self.aceptables)
+        # Ciclo que verifica que el pais de cada articulo sea igual al dado 
+        # y este es insertado en la lista
+        for i in range(tam_aceptables):
+	    # Obtenemos la lista de los autores del articulo i
+            autor = self.articulos[self.aceptables[i][0]].autores.all()
+            # Obtenemos el pais del primer autor de la lista
+            pais1 = autor[0].pais
+            if  pais1 == pais:
+                lista_notas.append(self.aceptables[i])
+        # Ordenamos de mayor a menor por nota
+        lista_notas.sort(key=lambda x:x[1], reverse = True)
+        return lista_notas
+        
+    # Retorna una lista cuyos elementos son tuplas (pais, [lista de notas])
+    def listar_articulos_por_pais(self, num_articulos_por_pais):
+        # Creamos una lista que contendra tuplas ('Pais', [articulos])
+        lista_paises = []
+        # Generemos lista de los paises cuyos articulos son aceptables
+        lista = self.paises_conferencia()
+        tam_lista = len(lista)
+        for i in range(tam_lista):
+            # Obtenemos una lista con los articulos del pais en la posicion i
+            lista_notas_por_pais = self.listar_notas_por_pais(lista[i])
+            tam_lista_pais = len(lista_notas_por_pais)
+            # Si la cantidad de articulos del pais es mayor o igual al minimo 
+            # de articulos por pais
+            if tam_lista_pais >= num_articulos_por_pais:
+                l = []
+                for j in range(tam_lista_pais):
+                    l.append(lista_notas_por_pais[j])
+                # Creamos una tupla ('Pais', [articulos])
+                t = (lista[i], l)
+                # Agregas a la lista paises
+                lista_paises.append(t)
+            # Ordenamos la lista de menor a mayor dependiendo de la cantidad de
+            # articulos aceptables por pais
+            lista_paises.sort(key=lambda x:len(x[1]))
+        return lista_paises
+        
+    # Retorna una lista con las tuplas (pais, [lista de notas]) donde esa lista
+    # de notas contiene la cantidad minima de articulos
+    def cantidad_min_articulos(self, num_articulos_por_pais):
+        lista_min = []
+        lista_paises = self.listar_articulos_por_pais(num_articulos_por_pais)
+        tam_lista_paises = len(lista_paises)
+        
+        for i in range(tam_lista_paises):
+            # Tamanio de la lista de notas de cada pais
+            tam = len(lista_paises[i][1])
+            j = 0
+            # Creamos una lista que contendra los articulos (notas)
+            l = []
+            # Ciclo que agrega en una lista el numero minimo de articulos por 
+            # pais
+            while j < num_articulos_por_pais:
+                l.append(lista_paises[i][1][j])
+                #del lista_paises[i][1][j]
+                j += 1
+                # Eliminamos la nota que agregamos a la lista
+                
+            t = (lista_paises[i][0], l)
+            lista_min.append(t)
+        #print 'Lista_ PAISES: ', lista_paises
+        return lista_min
+        
+    # Tipo de seleccion por pais
+    def agregar_aceptados(self, num_articulos_por_pais):
+        lista_minimos = self.cantidad_min_articulos(num_articulos_por_pais)
+        tam_minimos = len(lista_minimos)
+        for i in range(tam_minimos):
+            tam = len(lista_minimos[i][1])
+            j = 0
+            while j < tam:
+                # Insertamos a la lista de aceptados
+                self.set_aceptados(lista_minimos[i][1][j][0])
+                self.num_articulos -= 1 
+                j += 1
+        return self.num_articulos
+            
+    # Metodo que genera una lista de aquellos articulos que no estan en la lista
+    # de aceptados
+    def listar_no_aceptados(self,num_articulos_por_pais):
+        # Generamos una lista donde estaran los articulos que aun no han
+        # sido aceptados
+        lista_por_seleccionar = []
+        lista_articulos = self.listar_articulos_por_pais(num_articulos_por_pais)
+        tam_paises = len(lista_articulos)
+        for i in range(tam_paises):
+            # Generamos una lista con los articulos representados del pais i
+            lista = self.listar_notas_por_pais(lista_articulos[i][0])
+            #print 'lista articulos: '
+            #print lista
+            l = []
+            tam = len(lista)
+            # Ciclo que construye una lista con aquellos paises y sus articulos
+            # que aun no pertenecen a la lista aceptados. Esto para manejar
+            # la escogencia de articulos cuando el numero de articulos es mayor
+            # que la cantidad de articulos aceptados por el momento
+            for j in range(tam):
+                
+                res = lista[j][0] in self.aceptados
+                # Caso en que el id del articulo no pertenezca a los aceptados
+                if res == False:
+                    l.append(lista[j])
+            # Caso en que se consiguio articulos que no han sido aceptados
+            if len(l) != 0:
+                t = (lista_articulos[i][0], l)
+                lista_por_seleccionar.append(t)
+                    
+        return lista_por_seleccionar
+        
+    # Metodo que selecciona los articulos restantes para completar la capacidad
+    # maximo de articulos escogidos en la conferencia
+    def seleccionar_por_pais(self, num_articulos_por_pais):
+        lista_no_aceptados = self.listar_no_aceptados(num_articulos_por_pais)
+        tam_lista = len(lista_no_aceptados)
+        
+        for i in range(tam_lista):
+            promedios = self.listar_promedios(lista_no_aceptados[i][1])
+            self.crear_aceptados_empatados(promedios, lista_no_aceptados[i][1])

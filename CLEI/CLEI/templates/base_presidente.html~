@@ -35,6 +35,7 @@
 				<li><a href='/participante/autor/create'>Crear Autores</a></li>
 				<li><a href='/articulo/topico/create'>Crear Tópicos</a></li>
 				<li><a href='/articulo/asignar/presidente'>Asignar Puntuaciones</a></li>
+				<li><a href='/privado/presidente/cantArticulos'>Selección Artículos Desempate</a></li>
 			    </ul>
 			</nav>
 		    </td>

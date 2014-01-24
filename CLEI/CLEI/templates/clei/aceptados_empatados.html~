@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_presidente.html' %}
 
 {% block titulo %}Crear Articulo{% endblock %}
 
@@ -7,18 +7,6 @@
 
 {% endblock %}
 
-{% block barraizquierda %}
-<nav>
-    <ul class="menu">
-	<li><a href='/privado/presidente'>Inicio</a></li>
-	<li><a href='/articulo/create'>Crear Articulo</a></li>
-	<li><a href='/participante/miembro/create'>Crear Miembros</a></li>
-	<li><a href='/participante/autor/create'>Crear Autores</a></li>
-	<li><a href='/articulo/topico/create'>Crear Tópicos</a></li>
-	<li><a href='/articulo/asignar/presidente'>Asignar Puntuaciones</a></li>
-    </ul>
-</nav>
-{% endblock %}
 {% block contenido %}
 
 <p> Artículos aceptados: </p>
