@@ -2,10 +2,12 @@ from django import forms
 
 from CLEI.apps.articulo.models import Articulo, Topico, Puntuacion
 from CLEI.apps.participante.models import Autor, MiembroComite
+from .models import Clei
+
 # Create your models here.
-class Clei():
+class CLEI():
     def __init__(self):
-	self.num_articulos = 0
+        self.num_articulos = 0
         self.aceptables = []
         self.aceptables1 = []
         self.aceptados = []
@@ -17,7 +19,7 @@ class Clei():
         self.inscritos = {}
         
     def get_num_articulos(self):
-	return self.num_articulos
+	   return self.num_articulos
 
     # Metodo que retorna la lista de aceptables
     def get_aceptables(self):
@@ -33,7 +35,7 @@ class Clei():
         
     # Asigna la cantidad de articulos al congreso
     def set_num_articulos(self, num_articulos):
-	self.num_articulos = num_articulos
+	   self.num_articulos = num_articulos
 	
     # Metodo que inserta una tupla (idArticulo, promedio) en la lista de los 
     # aceptables
@@ -51,46 +53,54 @@ class Clei():
         
     # Metodo que crea el diccionario de articulos
     def crear_articulos(self):
-	a = Articulo.objects.all()
-	tam_articulos = len(a)
-	for i in range(tam_articulos):
-	    self.articulos[a[i].id_articulo] = a[i]
-	    
+    	a = Articulo.objects.all()
+    	tam_articulos = len(a)
+    	for i in range(tam_articulos):
+    	    self.articulos[a[i].id_articulo] = a[i]
+    # Metodo que limpia la lista de aceptados y asigna false a todos los 
+    # articulos que tenga True en el atributo de aceptado
     def limpiar_aceptados(self):
-	self.aceptados = []
-
+        self.aceptados = []
+        articulos = Articulo.objects.all()
+        for i in range(len(articulos)):
+            if articulos[i].aceptado == True:
+                id = articulos[i].id_articulo
+                Articulo.objects.filter(id_articulo=id).update(aceptado=False)
+        
+    # Metodo que limpia la lista de aceptables
     def limpiar_aceptables(self):
-	self.aceptables = []
+        self.aceptables = []
 	
+    # Metodo que limpia la lista de empatados
     def limpiar_empatados(self):
-	self.empatados = []
+        self.empatados = []
 	
-	
+	# Metodo que devuelve una lista con las puntuaciones de un articulo dado
     def listar_puntuacion_por_articulo(self, id_articulo):
-	lista = []
-	puntuacion = Puntuacion.objects.all()
-	tam_puntuacion = len(puntuacion)
-	for i in range(tam_puntuacion):
-	    if id_articulo==puntuacion[i].id_articulo:
-		lista.append(puntuacion[i].puntuacion)
-	return lista
+    	lista = []
+    	puntuacion = Puntuacion.objects.all()
+    	tam_puntuacion = len(puntuacion)
+    	for i in range(tam_puntuacion):
+    	    if id_articulo==puntuacion[i].id_articulo:
+                lista.append(puntuacion[i].puntuacion)
+    	return lista
   
     def agregar_evaluaciones(self):
-	promedio = 0
-	articulos = Articulo.objects.all()
-	puntuacion = Puntuacion.objects.all()
-	tam_articulos = len(articulos)
-	tam_puntuacion = len(puntuacion)
-	for i in range(tam_articulos):
-	    suma = 0
-	    k = 0
-	    lista = self.listar_puntuacion_por_articulo(articulos[i])
-	    tam = len(lista)
-	    if tam != 0:
-		for j in range(tam):
-		    suma += lista[j]
-		promedio = float(suma) / tam
-		self.evaluaciones[articulos[i].id_articulo] = promedio
+        promedio = 0
+        articulos = Articulo.objects.all()
+        puntuacion = Puntuacion.objects.all()
+        tam_articulos = len(articulos)
+        tam_puntuacion = len(puntuacion)
+        for i in range(tam_articulos):
+            suma = 0
+            k = 0
+            lista = self.listar_puntuacion_por_articulo(articulos[i])
+            tam = len(lista)
+            if tam != 0:
+                for j in range(tam):
+                    suma += lista[j]
+                promedio = float(suma) / tam
+            self.evaluaciones[articulos[i].id_articulo] = promedio
 	
 	
     # -------------------------------------------------------------------------
@@ -100,18 +110,18 @@ class Clei():
     # Metodo que agrega a la lista aquellos articulos que son considerados
     # como aceptables
     def crear_aceptables(self):
-	self.agregar_evaluaciones()
-	if len(self.evaluaciones) != 0:
-	    lista_evaluaciones = self.evaluaciones.items()
-	    lista_evaluaciones.sort(key=lambda x:x[1])
-	    lista_evaluaciones.reverse()
-	    tam_evaluaciones= len(lista_evaluaciones)
-	    for i in range(tam_evaluaciones):
-		if Puntuacion.objects.filter(id_articulo=lista_evaluaciones[i][0]).count()>=2:
-		    if lista_evaluaciones[i][1]>=3.0:
-			self.set_aceptables(lista_evaluaciones[i][0],
-					    lista_evaluaciones[i][1])
-	return self.aceptables
+    	self.agregar_evaluaciones()
+    	if len(self.evaluaciones) != 0:
+    	    lista_evaluaciones = self.evaluaciones.items()
+    	    lista_evaluaciones.sort(key=lambda x:x[1])
+    	    lista_evaluaciones.reverse()
+    	    tam_evaluaciones= len(lista_evaluaciones)
+    	    for i in range(tam_evaluaciones):
+        		if Puntuacion.objects.filter(id_articulo=lista_evaluaciones[i][0]).count()>=2:
+        		    if lista_evaluaciones[i][1]>=3.0:
+            			self.set_aceptables(lista_evaluaciones[i][0],
+            					    lista_evaluaciones[i][1])
+    	return self.aceptables
 	
     # Retorna una lista con los promedios de articulos en una lista dada
     def listar_promedios(self, lista):
@@ -156,6 +166,7 @@ class Clei():
                         # Agregamos el id del articulo a la lista de aceptados
                         id_articulo = lista[j][0]
                         self.set_aceptados(id_articulo)
+                        Articulo.objects.filter(id_articulo=id_articulo).update(aceptado=True)
                         
                         # Asignamos True al atributo aceptado del articulo
                         #self.articulos[id_articulo].set_aceptado(True)
@@ -193,25 +204,26 @@ class Clei():
         return self.num_articulos     
 
     def guardar_aceptados(self):
-	lista = []
-	for i in range(len(self.get_aceptados())):
-	    lista.append(Articulo.objects.filter(id_articulo=self.get_aceptados()[i]))
-	articulos = []
-	for i in range(len(lista)):
-	    res = lista[i][0] in articulos
-	    if res == False:
-		articulos.append(lista[i][0])
-	return articulos
+    	lista = []
+    	for i in range(len(self.get_aceptados())):
+    	    lista.append(Articulo.objects.filter(id_articulo=self.get_aceptados()[i]))
+    	articulos = []
+    	for i in range(len(lista)):
+    	    res = lista[i][0] in articulos
+    	    if res == False:
+    		  articulos.append(lista[i][0])
+    	return articulos
 	
     def guardar_empatados(self):
-	lista = []
-	for i in range(len(self.get_empatados())):
-	    lista.append(Articulo.objects.filter(id_articulo=self.get_empatados()[i]))
-	articulos = []
-	for i in range(len(lista)):
-	    res = lista[i][0] in articulos
-	    articulos.append(lista[i][0])
-	return articulos
+    	lista = []
+    	for i in range(len(self.get_empatados())):
+    	    lista.append(Articulo.objects.filter(id_articulo=self.get_empatados()[i]))
+    	articulos = []
+    	for i in range(len(lista)):
+            res = lista[i][0] in articulos
+            if res == False:
+              articulos.append(lista[i][0])
+    	return articulos
 	
     # Esquema de seleccion por desempate
     def seleccionar_desempate(self, id):
@@ -238,10 +250,8 @@ class Clei():
     def paises_conferencia(self):
         lista_paises = []
 	
-        lista_id_articulos = self.listar_id_aceptables()
-        print 'lista id: ', lista_id_articulos    
+        lista_id_articulos = self.listar_id_aceptables() 
         tam_articulos = len(lista_id_articulos)
-        print tam_articulos
         # Ciclo que recorre la lista de articulos aceptables con cada id y 
         # asigna el pais de los articulos que estan de primero en la lista de 
         # autores de cada articulo
@@ -285,7 +295,9 @@ class Clei():
         for i in range(tam_lista):
             # Obtenemos una lista con los articulos del pais en la posicion i
             lista_notas_por_pais = self.listar_notas_por_pais(lista[i])
+            #print 'pais: ', lista[i], ' lista notas: ', lista_notas_por_pais
             tam_lista_pais = len(lista_notas_por_pais)
+            #print tam_lista_pais
             # Si la cantidad de articulos del pais es mayor o igual al minimo 
             # de articulos por pais
             if tam_lista_pais >= num_articulos_por_pais:
@@ -300,7 +312,7 @@ class Clei():
             # articulos aceptables por pais
             lista_paises.sort(key=lambda x:len(x[1]))
         return lista_paises
-        
+    
     # Retorna una lista con las tuplas (pais, [lista de notas]) donde esa lista
     # de notas contiene la cantidad minima de articulos
     def cantidad_min_articulos(self, num_articulos_por_pais):
@@ -326,7 +338,7 @@ class Clei():
             lista_min.append(t)
         #print 'Lista_ PAISES: ', lista_paises
         return lista_min
-        
+
     # Tipo de seleccion por pais
     def agregar_aceptados(self, num_articulos_por_pais):
         lista_minimos = self.cantidad_min_articulos(num_articulos_por_pais)
@@ -378,7 +390,7 @@ class Clei():
     def seleccionar_por_pais(self, num_articulos_por_pais):
         lista_no_aceptados = self.listar_no_aceptados(num_articulos_por_pais)
         tam_lista = len(lista_no_aceptados)
-        
+        print 'lista no aceptados: ', lista_no_aceptados
         for i in range(tam_lista):
             promedios = self.listar_promedios(lista_no_aceptados[i][1])
             self.crear_aceptados_empatados(promedios, lista_no_aceptados[i][1])

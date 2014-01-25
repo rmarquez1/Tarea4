@@ -16,30 +16,30 @@ from .forms import AutorForm, MiembroComiteForm
 
 def nuevo_miembro(request):
     if request.method == 'POST':
-	formulario = MiembroComiteForm(request.POST)
-	if formulario.is_valid():
-	    username = formulario.cleaned_data['username']
-	    password = formulario.cleaned_data['password']
-	    correo = formulario.cleaned_data['correo']
-	    user = User.objects.create_user(username, correo, password)
-	    user.is_active = True
-	    user.save()
-	    formulario.save()
-	    return HttpResponseRedirect('/participante/miembro/create')
+		formulario = MiembroComiteForm(request.POST)
+		if formulario.is_valid():
+		    username = formulario.cleaned_data['username']
+		    password = formulario.cleaned_data['password']
+		    correo = formulario.cleaned_data['correo']
+		    user = User.objects.create_user(username, correo, password)
+		    user.is_active = True
+		    user.save()
+		    formulario.save()
+		    return HttpResponseRedirect('/participante/miembro/create')
     else:
-	formulario = MiembroComiteForm()
+		formulario = MiembroComiteForm()
     return render_to_response('participante/crear_miembro.html', 
 			      {'formulario':formulario},
 			      context_instance= RequestContext(request))
     
 def nuevo_autor(request):
     if request.method == 'POST':
-	formulario = AutorForm(request.POST)
-	if formulario.is_valid():
-	    formulario.save()
-	    return HttpResponseRedirect('/participante/autor/create')
+		formulario = AutorForm(request.POST)
+		if formulario.is_valid():
+		    formulario.save()
+		    return HttpResponseRedirect('/participante/autor/create')
     else:
-	formulario = AutorForm()
+		formulario = AutorForm()
     return render_to_response('participante/crear_autor.html', {'formulario':formulario}, context_instance= RequestContext(request))
 
     

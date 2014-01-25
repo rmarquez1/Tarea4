@@ -23,13 +23,14 @@
     {% endfor %}
 </table>
 
-{% if limite >= 0 %}
-<p>Seleccione de los siguientes artículos que quedaron empatados, {{limite}}</p>
+{% if limite > 0 %}
+<p>Seleccione de los siguientes artículos que quedaron empatados</p>
+<p>Por favor seleccione: {{limite}}</p>
 
-    <form id = "formulario" action="/privado/clei/presidente/aceptadosEmpatados" method="POST">{% csrf_token %}
+    <form id = "formulario" action="/privado/clei/presidente/seleccionDesempate" method="POST">{% csrf_token %}
     {% for item in lista_empatados %}
-	<input type="checkbox" name="empatados" id="option{{item.}}" value={{item}} />
-	<label for="option{{item}}"><b>{{item.titulo}}</b></label><br/>
+    	<input type="checkbox" name="empatados" id="option{{item.}}" value={{item}} />
+    	<label for="option{{item}}"><b>{{item.titulo}}</b></label><br/>
     {% endfor %}
 	<input type="submit" name="submit" value="Seleccionar" class="buttons"/>
     </form>

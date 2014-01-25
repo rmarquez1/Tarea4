@@ -30,12 +30,10 @@
 </script>
 
 <form name="fvalida" id = "formulario" action="" enctype='multipart/form-data' method="POST">{% csrf_token %}
-	<label for="num_articulos">Número de Artículos:</label>
-	<input id="num_articulos" type="number" name="articulos"/><br>
 
 	<label for="num_minimo">Número mínimo:</label>
 	<input id="num_minimo" type="number" name="minimo"/>
-	<input type="submit" onclick="valida_envia()" value="Seleccionar" class="buttons"/>
+	<input type="submit" name"submit" value="Seleccionar" class="buttons"/>
 	<input type="reset" value="Limpiar" class="buttons"/>
 </form>
 

@@ -12,7 +12,7 @@ from CLEI.apps.participante.models import Autor, MiembroComite
 # Create your views here.
 def inicio(request):
     return render_to_response('inicio/inicio.html', context_instance= RequestContext(request))
-    
+
 def nuevo_usuario(request):
     if request.method=='POST':
         formulario = UserCreationForm(request.POST)
@@ -22,7 +22,7 @@ def nuevo_usuario(request):
     else:
         formulario = UserCreationForm()
     return render_to_response('nuevousuario.html',{'formulario':formulario}, context_instance=RequestContext(request))
-    
+
 def ingresar(request):
     if request.method == 'POST':
         formulario = AuthenticationForm(request.POST)
@@ -35,10 +35,9 @@ def ingresar(request):
                     login(request, acceso)
                     p = MiembroComite.objects.filter(username=usuario, es_presidente=True)
                     if len(p)!=0:
-			print p
-			return HttpResponseRedirect('/privado/presidente')
-		    else:
-			return HttpResponseRedirect('/privado/miembro')
+            			return HttpResponseRedirect('/privado/presidente')
+                    else:
+                        return HttpResponseRedirect('/privado/miembro')
                 else:
                     return HttpResponse('No esta activo')
             else:

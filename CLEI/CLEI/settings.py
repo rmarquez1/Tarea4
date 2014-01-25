@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'CLEI.apps.articulo',
     'CLEI.apps.participante',
+    'CLEI.apps.clei',
 )
 
 MIDDLEWARE_CLASSES = (

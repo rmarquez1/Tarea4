@@ -8,6 +8,18 @@
 	padding:0px;
 	margin:0px;
 }
+
+
+.menu li ul{
+	display: none;
+	position: absolute;
+	min-width: 140px;
+}
+.menu li:hover > ul{
+	display: block;
+} 
+
+
 .menu ul{
 	margin:0px;
 	padding:0px;
@@ -19,20 +31,22 @@
 .menu li a{
 	display: block;
 	width: 200px;
-	height: 30px;
-	padding: 6px;
+	height: 20px;
+	padding: 10px;
 	line-height:30px;
 	text-decoration: none;
-	text-align: center;
-	color: #FFF;
-	background-color:#49afcd;
+	text-align: left;
+	font-size:90%;
+	font-family: Century Gothic, sans-serif;
+	color: #49afcd;
+	background-color:#FFF;
 	position: relative;
-	border-left: 2px solid #333;
+	border-left: 0px solid #333;
 
 }
 .menu li a:hover{
 	color:black;
-	background-color:white;
+	background-color:#C0C0C0;
 }
 .buttons { 
 	background: #49afcd; 

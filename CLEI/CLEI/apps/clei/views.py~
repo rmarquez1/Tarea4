@@ -65,7 +65,7 @@ def seleccion_por_pais(request):
 	num_paises = len(lista_paises)
 	limite = clei.agregar_aceptados(num_minimo_paises)
 	if limite != 0:
-	    clei.seleccion_por_pais(num_minimo_paises)
+	    clei.seleccionar_por_pais(num_minimo_paises)
 	    lista_aceptados = clei.guardar_aceptados()
 	    lista_empatados = clei.guardar_empatados()
 	return render_to_response('clei/aceptados_empatados.html', 

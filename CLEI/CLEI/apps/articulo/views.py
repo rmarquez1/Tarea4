@@ -8,43 +8,43 @@ from .models import Articulo
 # Create your views here.
 def nuevo_articulo(request):
     if request.method == 'POST':
-	formulario = ArticuloForm(request.POST)
-	if formulario.is_valid():
-	    formulario.save()
-	    return HttpResponseRedirect('/articulo/create')
+		formulario = ArticuloForm(request.POST)
+		if formulario.is_valid():
+		    formulario.save()
+		    return HttpResponseRedirect('/articulo/create')
     else:
-	formulario = ArticuloForm()
+		formulario = ArticuloForm()
     return render_to_response('articulo/crear_articulo.html', {'formulario':formulario}, context_instance= RequestContext(request))
 
 def nuevo_topico(request):
     if request.method == 'POST':
-	formulario = TopicoForm(request.POST)
-	if formulario.is_valid():
-	    formulario.save()
-	    return HttpResponseRedirect('/articulo/topico/create')
+		formulario = TopicoForm(request.POST)
+		if formulario.is_valid():
+		    formulario.save()
+		    return HttpResponseRedirect('/articulo/topico/create')
     else:
-	formulario = TopicoForm()
+		formulario = TopicoForm()
     return render_to_response('articulo/crear_topico.html', {'formulario':formulario}, context_instance= RequestContext(request))  
   
 def asignar_puntuacion_presidente(request):
     if request.method == 'POST':
-	formulario = PuntuacionForm(request.POST)
-	if formulario.is_valid():
-	    formulario.save()
-	    return HttpResponseRedirect('/articulo/asignar/presidente')
+		formulario = PuntuacionForm(request.POST)
+		if formulario.is_valid():
+		    formulario.save()
+		    return HttpResponseRedirect('/articulo/asignar/presidente')
     else:
-	formulario = PuntuacionForm()
+		formulario = PuntuacionForm()
     return render_to_response('articulo/asignar_puntuacion_presidente.html', {'formulario':formulario}, context_instance= RequestContext(request))
 
     
 def asignar_puntuacion_miembro(request):
     if request.method == 'POST':
-	formulario = PuntuacionForm(request.POST)
-	if formulario.is_valid():
-	    formulario.save()
-	    return HttpResponseRedirect('/articulo/asignar/miembro')
+		formulario = PuntuacionForm(request.POST)
+		if formulario.is_valid():
+		    formulario.save()
+		    return HttpResponseRedirect('/articulo/asignar/miembro')
     else:
-	formulario = PuntuacionForm()
+		formulario = PuntuacionForm()
     return render_to_response('articulo/asignar_puntuacion_miembro.html', {'formulario':formulario}, context_instance= RequestContext(request))
     
 # Metodo que devuelve una lista de los articulos considerados como aceptables

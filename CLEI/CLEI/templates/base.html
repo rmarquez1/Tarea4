@@ -24,25 +24,31 @@
 
 	<center>
 	    <table width="70%" bgcolor="#ffffff" frame="lhs" frame="rhs">
-		<tr>
-		    <!-- Barra izquierda -->
-		    <td  width="20%">
-			{% block barraizquierda %}{% endblock %}
-		    </td>
-		    <!-- Parte central -->
-		    <td colspan="3">
-			<div class="jumbotron">
-			<div class="container">
-			<div>
-			    {% block sesion %}{% endblock %}
-			    {% block encabezado %}{% endblock %}
-			</div>
-			<div>
-			    {% block contenido %}{% endblock %}
-			</div>
-		    <!-- Barra derecha -->
-		    </td>
-		</tr>
+	    	<tbody valign="top" align="left">
+				<tr>
+				    <!-- Barra izquierda -->
+				    <td  width="20%">
+						<nav>
+						    <ul class="menu">
+							<li><a href='/'>Inicio</a></li>
+						    </ul>
+						</nav>
+				    </td>
+				    <!-- Parte central -->
+				    <td colspan="3">
+					<div class="jumbotron">
+					<div class="container">
+					<div>
+					    {% block sesion %}{% endblock %}
+					    {% block encabezado %}{% endblock %}
+					</div>
+					<div>
+					    {% block contenido %}{% endblock %}
+					</div>
+				    <!-- Barra derecha -->
+				    </td>
+				</tr>
+			</tbody>
 	    </table>
 	</center>
 	<hr>
