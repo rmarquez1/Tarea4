@@ -112,10 +112,9 @@ def seleccion_por_pais_proporcion(request):
     num = p[0].num_articulos
     clei.set_num_articulos(p[0].num_articulos)
     clei.crear_aceptables()
-    aceptados_empatados = clei.seleccion_equitativa(p[0].num_articulos)
+    limite = clei.seleccion_equitativa(p[0].num_articulos)
     lista_aceptados = clei.guardar_aceptados()
     lista_empatados = clei.guardar_empatados()
-    limite = num - len(lista_aceptados)
     return render_to_response('clei/aceptados_empatados.html',
                              {'lista_aceptados':lista_aceptados,
                               'limite': limite,

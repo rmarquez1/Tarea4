@@ -200,8 +200,11 @@ class CLEI():
                     else: # Caso en que ya se han agregado los articulos
                         break
                 break
-        # Retorna el numero de espacios restantes en la lista de aceptados       
-        return self.num_articulos     
+        # Retorna el numero de espacios restantes en la lista de aceptados    
+        if self.num_articulos + len(self.aceptados) > len(self.aceptables):
+            return 0
+        else:
+	    return self.num_articulos     
 
     def guardar_aceptados(self):
     	lista = []
@@ -509,7 +512,11 @@ class CLEI():
             self.set_aceptados(i.id_articulo)
         for i in empat:
             self.set_empatados(i.id_articulo)
-        return [self.aceptados, self.empatados]
+	if numero > len(self.aceptables):
+		return 0
+	else:
+		return numero - len(self.aceptados)
+
 
     # Metodo para seleccionar la cantidad de articulos a aceptar
     # manteniendo la proporcion entre topicos diferentes
