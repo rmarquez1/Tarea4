@@ -390,7 +390,168 @@ class CLEI():
     def seleccionar_por_pais(self, num_articulos_por_pais):
         lista_no_aceptados = self.listar_no_aceptados(num_articulos_por_pais)
         tam_lista = len(lista_no_aceptados)
-        print 'lista no aceptados: ', lista_no_aceptados
         for i in range(tam_lista):
             promedios = self.listar_promedios(lista_no_aceptados[i][1])
             self.crear_aceptados_empatados(promedios, lista_no_aceptados[i][1])
+
+
+    #------------------------------------------------------#
+    # seleccion de articulos 80% por proporcion de paises  #
+    #------------------------------------------------------#
+    def seleccion_ochenta(self, numero):
+        self.aceptables1 = []
+        acept_aux = []
+        acept = []
+        cont_pais= {}
+        acept_ochenta = []
+        self.aceptables1 = self.aceptables[:]
+        # se ordenan los paises por nota decendente
+        self.aceptables1.sort(key= lambda x: x[1], reverse = True)
+        # se genera una lista de articulos aceptables1 (objetos articulos)
+        for i in self.aceptables1:
+            acept.append(self.articulos[i[0]])
+        num_articulos = len(acept)
+        tam_aceptables = len(self.aceptables)
+        for i in range(tam_aceptables):
+	    # Obtenemos la lista de los autores del articulo i
+            autor = self.articulos[self.aceptables[i][0]].autores.all()
+            # Obtenemos el pais del primer autor de la lista
+            if cont_pais.has_key(autor[0].pais):
+                cont_pais[autor[0].pais]= cont_pais[autor[0].pais] + 1
+            else:
+                cont_pais[autor[0].pais]= 1
+
+
+        # se crea el iterador y para cada pais se recorre la lista de aceptados
+        # seleccionando la cantidad correspondiente a ser admitida para ese pais
+        acept_aux = acept[:]
+        for j in cont_pais:
+            k= 0
+            m = ((0.8*numero/num_articulos)*cont_pais[j])-1
+            m = round(m)
+
+            for i in range(tam_aceptables):
+	         # Obtenemos la lista de los autores del articulo i
+                autor = self.articulos[self.aceptables[i][0]].autores.all()
+                # Obtenemos el pais del primer autor de la lista
+                if j == autor[0].pais:
+                    if k <= m:
+                        acept_ochenta.append(acept.pop(acept.index(self.articulos[self.aceptables[i][0]])))
+                        k = k + 1
+
+        # se asigna a aceptables la lista de aceptables sin los que ya
+        # han sido admitidos, esta lista contiene objetos Articulo, no tuplas
+        self.aceptables1 = acept
+        return acept_ochenta
+
+    # Metodo que selecciona los 20% de la cantidad de articulos que se desea
+    # admitir y los agrega a la lista de aceptados, si hay articulos en condicion
+    # de empate los agrega a la lista de empatados
+    def seleccion_veinte(self, numero):
+        acept_veinte = []
+        dic_prom= {}
+        for i in self.aceptables:
+            dic_prom[i[0]]=i[1]
+        while numero > 0:
+        #si n es menor al numero de articulos aceptables, debemos elegir cuales tomar
+            if numero < len(self.aceptables1):
+        # si el ultimo articulo no esta empatado con el siguiente, tomamos los n primeros
+        # articulos de la lista de articulos aceptables
+                a = self.aceptables1[numero-1].id_articulo
+                b= self.aceptables1[numero].id_articulo
+                if dic_prom[a] !=  dic_prom[b]:
+                    acept_veinte = self.aceptables1[0:numero]
+                    return acept_veinte
+                #sino restamos uno, hasta encontrar un articulo que no este empatado con ninguno de
+                # los que no hemos admitido
+                else:
+                    if numero > 0:
+                        numero = numero - 1
+            #si n es mayor o igual a numero de articulos aceptables
+            else:
+        # admitidos sera igual a aceptables
+                acept_veinte = self.aceptables1
+                return acept_veinte
+
+        return acept_veinte
+
+    def empatados_veinte(self, numero):
+        empat = []
+        acept= self.seleccion_veinte(numero)
+        dic_prom= {}
+        for i in self.aceptables:
+            dic_prom[i[0]]=i[1]
+        if len(acept) != numero:
+            no_admitidos= self.aceptables1[len(acept):len(self.aceptables1)]
+            if len(acept) < len(self.aceptables1):
+                indice = dic_prom[self.aceptables1[len(acept)].id_articulo]
+                for i in no_admitidos:
+                    if dic_prom[i.id_articulo] == indice:
+                        empat.append(i)
+        return[acept, empat]
+
+     # selecciona el 80% de la cantidad de articulos a filtrar segun su pais
+    # el otro 20% lo selecciona por indice
+    # en caso de haber casos de empate que no quepan en la lista de admitidos
+    # se almacenan en la lista de empatados para el desempate por parte del
+    # presidente
+    def seleccion_equitativa(self, numero):
+        self.aceptados = []
+        self.empatados = []
+        self.agregar_evaluaciones()
+        acept = self.seleccion_ochenta(numero)
+        resto = self.empatados_veinte(numero - len(acept))
+        acept_veinte = resto[0]
+        empat = resto[1]
+        for i in acept:
+            self.set_aceptados(i.id_articulo)
+        for i in acept_veinte:
+            self.set_aceptados(i.id_articulo)
+        for i in empat:
+            self.set_empatados(i.id_articulo)
+        return [self.aceptados, self.empatados]
+
+    # Metodo para seleccionar la cantidad de articulos a aceptar
+    # manteniendo la proporcion entre topicos diferentes
+    #
+    def seleccion_topicos(self, numero):
+        self.aceptados = []
+        self.empatados = []
+        acept_aux = []
+        acept = []
+        cont_topico= {}
+        acept_topicos = []
+        self.aceptables1 = self.aceptables[:]
+        # se ordenan los paises por nota decendente
+        self.aceptables1.sort(key= lambda x: x[1], reverse = True)
+        # se genera una lista de articulos aceptables1 (objetos articulos)
+        for i in self.aceptables1:
+            acept.append(self.articulos[i[0]])
+        num_articulos = len(acept)
+
+
+
+        # se cuentan cuantos articulos hay de cada pais
+        # y se almacena en un diccionario
+        for i in acept:
+            if cont_topico.has_key(i.topicos.all()[0].nombre_topico):
+                cont_topico[i.topicos.all()[0].nombre_topico]= cont_topico[i.topicos.all()[0].nombre_topico] + 1
+            else:
+                cont_topico[i.topicos.all()[0].nombre_topico]= 1
+        # se crea el iterador y para cada pais se recorre la lista de aceptados
+        # seleccionando la cantidad correspondiente a ser admitida para ese pais
+        acept_aux = acept[:]
+        for j in cont_topico:
+            k= 0
+            m = ((1.0*numero/num_articulos)*cont_topico[j])-1
+            for i in acept_aux:
+                    if j == i.topicos.all()[0].nombre_topico:
+                        if k <= m:
+                            acept_topicos.append(acept.pop(acept.index(i)))
+                            k = k + 1
+
+        # se asigna a aceptables la lista de aceptables sin los que ya
+        # han sido admitidos, esta lista contiene objetos Articulo, no tuplas
+        for i in acept_topicos:
+            self.set_aceptados(i.id_articulo)
+        return 0
