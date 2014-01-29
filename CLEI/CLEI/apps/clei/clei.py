@@ -57,6 +57,7 @@ class CLEI():
     	tam_articulos = len(a)
     	for i in range(tam_articulos):
     	    self.articulos[a[i].id_articulo] = a[i]
+    	    
     # Metodo que limpia la lista de aceptados y asigna false a todos los 
     # articulos que tenga True en el atributo de aceptado
     def limpiar_aceptados(self):
@@ -66,14 +67,24 @@ class CLEI():
             if articulos[i].aceptado == True:
                 id = articulos[i].id_articulo
                 Articulo.objects.filter(id_articulo=id).update(aceptado=False)
+            elif articulos[i].aceptado_especial == True:
+                id = articulos[i].id_articulo
+                Articulo.objects.filter(id_articulo=id).update(aceptado_especial=False)
         
     # Metodo que limpia la lista de aceptables
     def limpiar_aceptables(self):
         self.aceptables = []
+        
 	
     # Metodo que limpia la lista de empatados
     def limpiar_empatados(self):
         self.empatados = []
+        
+    def limpiar_falta_cupo(self):
+	    articulos = Articulo.objects.filter(rechazado_falta_cupo = True)
+	    for i in range(len(articulos)):
+        	id = articulos[i].id_articulo
+        	Articulo.objects.filter(id_articulo=id).update(rechazado_falta_cupo=False)
 	
 	# Metodo que devuelve una lista con las puntuaciones de un articulo dado
     def listar_puntuacion_por_articulo(self, id_articulo):
@@ -204,8 +215,9 @@ class CLEI():
         if self.num_articulos + len(self.aceptados) > len(self.aceptables):
             return 0
         else:
-	    return self.num_articulos     
+            return self.num_articulos    
 
+	
     def guardar_aceptados(self):
     	lista = []
     	for i in range(len(self.get_aceptados())):
@@ -351,7 +363,9 @@ class CLEI():
             j = 0
             while j < tam:
                 # Insertamos a la lista de aceptados
-                self.set_aceptados(lista_minimos[i][1][j][0])
+                id = lista_minimos[i][1][j][0]
+                self.set_aceptados(id)
+                Articulo.objects.filter(id_articulo=id).update(aceptado=True)
                 self.num_articulos -= 1 
                 j += 1
         return self.num_articulos
@@ -393,11 +407,57 @@ class CLEI():
     def seleccionar_por_pais(self, num_articulos_por_pais):
         lista_no_aceptados = self.listar_no_aceptados(num_articulos_por_pais)
         tam_lista = len(lista_no_aceptados)
+        print 'lista no aceptados: ', lista_no_aceptados
         for i in range(tam_lista):
             promedios = self.listar_promedios(lista_no_aceptados[i][1])
             self.crear_aceptados_empatados(promedios, lista_no_aceptados[i][1])
-
-
+            
+	# -------------------------------------------------------------------------
+    # MOSTRADO DE ESTADOS FINALES DE SELECCION
+    # -------------------------------------------------------------------------
+    
+    # Metodo que retorna aquellos articulos cuyo estado final de seleccion 
+    # es aceptado
+    def mostrar_aceptados(self):
+    	articulos = Articulo.objects.filter(aceptado=True)
+    	return articulos
+    
+    # Metodo que retorna aquellos articulos cuyo estado final de seleccion 
+    # es aceptado especial
+    def mostrar_aceptados_especiales(self):
+    	articulos = Articulo.objects.filter(aceptado_especial=True)
+    	return articulos
+    	
+    # Metodo que retorna aquellos articulos cuyo estado final de seleccion 
+    # es rechazado por promedios
+    def mostrar_rechazados_promedio(self):
+    	
+    	articulos = Articulo.objects.filter(aceptado=False,
+    										aceptado_especial=False,
+    										rechazado_falta_cupo = False,
+    										rechazado_por_promedio=False)
+    	return articulos
+    
+    # Metodo que asigna True en el campo rechazado por falta de cupo a aquellos
+    # articulos que listaron como empatados pero que no pudieron ser ingresados
+    # a la lista de aceptados	
+    def asignar_falta_cupo(self):
+    	empatados = self.get_empatados()
+    	tam = len(empatados)
+    	for i in range(tam):
+    		res = empatados[i] in self.aceptados
+    		if res == False:
+    			Articulo.objects.filter(id_articulo=empatados[i]).update(rechazado_falta_cupo=True)
+    
+    # Metodo que retorna aquellos articulos cuyo estado final de seleccion 
+    # es rechazado por falta de cupo	
+    def mostrar_falta_cupo(self):
+    	articulos = Articulo.objects.filter(aceptado=False,
+    										aceptado_especial=False,
+    										rechazado_falta_cupo = True,
+    										rechazado_por_promedio=False)
+    	return articulos
+    
     #------------------------------------------------------#
     # seleccion de articulos 80% por proporcion de paises  #
     #------------------------------------------------------#
@@ -416,7 +476,7 @@ class CLEI():
         num_articulos = len(acept)
         tam_aceptables = len(self.aceptables)
         for i in range(tam_aceptables):
-	    # Obtenemos la lista de los autores del articulo i
+        # Obtenemos la lista de los autores del articulo i
             autor = self.articulos[self.aceptables[i][0]].autores.all()
             # Obtenemos el pais del primer autor de la lista
             if cont_pais.has_key(autor[0].pais):
@@ -434,7 +494,7 @@ class CLEI():
             m = round(m)
 
             for i in range(tam_aceptables):
-	         # Obtenemos la lista de los autores del articulo i
+             # Obtenemos la lista de los autores del articulo i
                 autor = self.articulos[self.aceptables[i][0]].autores.all()
                 # Obtenemos el pais del primer autor de la lista
                 if j == autor[0].pais:
@@ -508,14 +568,17 @@ class CLEI():
         empat = resto[1]
         for i in acept:
             self.set_aceptados(i.id_articulo)
+            Articulo.objects.filter(id_articulo=i.id_articulo).update(aceptado=True)
         for i in acept_veinte:
             self.set_aceptados(i.id_articulo)
+            Articulo.objects.filter(id_articulo=i.id_articulo).update(aceptado=True)
         for i in empat:
             self.set_empatados(i.id_articulo)
-	if numero > len(self.aceptables):
-		return 0
-	else:
-		return numero - len(self.aceptados)
+            Articulo.objects.filter(id_articulo=i.id_articulo).update(rechazado_falta_cupo = True)
+        if numero > len(self.aceptables):
+            return 0
+        else:
+            return numero - len(self.aceptados)
 
 
     # Metodo para seleccionar la cantidad de articulos a aceptar
@@ -561,4 +624,12 @@ class CLEI():
         # han sido admitidos, esta lista contiene objetos Articulo, no tuplas
         for i in acept_topicos:
             self.set_aceptados(i.id_articulo)
+            Articulo.objects.filter(id_articulo=i.id_articulo).update(aceptado=True)
         return 0
+
+
+
+
+    
+    
+    

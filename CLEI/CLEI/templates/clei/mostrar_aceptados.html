@@ -10,6 +10,11 @@
 
 {% block contenido %}
 
+{% if num < 0 %}
+<p> Ha excedido la cantidad de artículos por seleccionar </p>
+{% endif %}
+
+{% if num >= 0 %}
 <p> Artículos aceptados definitivos: </p>
 <table>
     <tr>
@@ -23,5 +28,6 @@
     </tr>
     {% endfor %}
 </table>
+{% endif %}
 
 {% endblock %}

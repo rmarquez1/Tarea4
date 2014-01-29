@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -23,36 +22,42 @@
 	</center>
 
 	<center>
-	    <table width="70%" bgcolor="#ffffff" frame="lhs" frame="rhs">
-		<tr>
-		    <!-- Barra izquierda -->
-		    <td  width="20%">
-			<nav>
-			    <ul class="menu">
-				<li><a href='/privado/presidente'>Inicio</a></li>
-				<li><a href='/articulo/create'>Crear Articulo</a></li>
-				<li><a href='/participante/miembro/create'>Crear Miembros</a></li>
-				<li><a href='/participante/autor/create'>Crear Autores</a></li>
-				<li><a href='/articulo/topico/create'>Crear Tópicos</a></li>
-				<li><a href='/articulo/asignar/presidente'>Asignar Puntuaciones</a></li>
-				<li><a href='/privado/presidente/cantArticulos'>Selección Artículos Desempate</a></li>
-			    </ul>
-			</nav>
-		    </td>
-		    <!-- Parte central -->
-		    <td colspan="3">
-			<div class="jumbotron">
-			<div class="container">
-			<div>
-			    {% block sesion %}{% endblock %}
-			    {% block encabezado %}{% endblock %}
-			</div>
-			<div>
-			    {% block contenido %}{% endblock %}
-			</div>
-		    <!-- Barra derecha -->
-		    </td>
-		</tr>
+	    <table width="70%" bgcolor="#ffffff" >
+	    	<tbody valign="top" align="left">
+				<tr>
+				    <!-- Barra izquierda -->
+				    <td  width="20%">
+							<nav >
+							    <ul class="menu">
+									<li><a href='/privado/presidente'>Inicio</a></li>
+									<li><a href='/privado/clei/presidente/cantArticulos'>Cantidad de Artículos</a></li>
+									<li><a href='/articulo/create'>Crear Articulo</a></li>
+									<li><a href='/participante/miembro/create'>Crear Miembros</a></li>
+									<li><a href='/participante/autor/create'>Crear Autores</a></li>
+									<li><a href='/articulo/topico/create'>Crear Tópicos</a></li>
+									<li><a href='/articulo/asignar/presidente'>Asignar Puntuaciones</a></li>
+									<li><a href='/privado/clei/presidente/aceptadosEmpatados'>Selección por Desempate</a></li>
+									<li><a href='/privado/clei/presidente/seleccionPais'>Selección Por País</a></li>
+									<li><a href='/privado/clei/presidente/estadoSeleccion'>Estado Final de Selección</a></li>
+									<li><a href='/'>Cerrar Sesión</a></li>
+							    </ul>
+							</nav>
+				    </td>
+				    <!-- Parte central -->
+				    <td>
+						<div class="jumbotron">
+						<div class="container">
+						<div>
+						    {% block sesion %}{% endblock %}
+						    {% block encabezado %}{% endblock %}
+						</div>
+						<div>
+						    {% block contenido %}{% endblock %}
+						</div>
+					    <!-- Barra derecha -->
+				    </td>
+				</tr>
+			</tbody>
 	    </table>
 	</center>
 	<hr>
