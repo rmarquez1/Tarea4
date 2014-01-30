@@ -8,8 +8,8 @@
 {% endblock %}
 
 {% block sesion %}
-<p align="right"><a href='{% url 'CLEI.apps.inicio.views.ingresar' %}'>Iniciar Sesión</a></p>
-<!-- <p align="right"><a href='{% url 'CLEI.apps.inicio.views.ingresar' %}'>Regístrate</a></p> -->
+<p align="right"><a href='{% url 'CLEI.apps.inicio.views.ingresar' %}'>Iniciar Sesión</a>
+		 <a href='{% url 'CLEI.apps.inicio.views.ingresar' %}'>Regístrate</a></p>
 {% endblock %}
 
 {% block barraizquierda %}
