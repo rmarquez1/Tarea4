@@ -99,6 +99,7 @@ class CLEI():
                 lista.append(puntuacion[i].puntuacion)
     	return lista
   
+    # Metodo que agrega las evaluaciones de los articulos
     def agregar_evaluaciones(self):
         promedio = 0
         articulos = Articulo.objects.all()
