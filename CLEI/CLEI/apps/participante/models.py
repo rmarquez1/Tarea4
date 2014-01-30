@@ -3,6 +3,8 @@ from django.db import models
 #from django.contrib.auth.models import User
 
 # Create your models here.
+
+# Clase abstracta para el modelo de Personas que participan en el congreso
 class Persona(models.Model):
     username = models.CharField(max_length=30, unique=False)
     password = models.CharField(max_length=60, unique=False)
@@ -15,12 +17,16 @@ class Persona(models.Model):
 	abstract = True
 	unique_together = ("username", "correo")
 
+
+# Clase para el modelo de autores. Hereda de Persona
 class Autor(Persona):
     pais = models.CharField(max_length=20)
     
     def __unicode__(self):
 	return str(self.correo)
 	
+
+# Clase para el modelo de miembros del comite. Hereda de Persona
 class MiembroComite(Persona):
     es_presidente = models.BooleanField()
     
