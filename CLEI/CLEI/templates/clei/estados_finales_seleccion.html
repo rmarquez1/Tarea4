@@ -1,0 +1,75 @@
+{% extends 'base_presidente.html' %}
+
+{% block titulo %}Crear Articulo{% endblock %}
+
+{% block encabezado %}
+    <h1 style="display: block; font-size: 20px; padding: 10px; margin-left: 0; -webkit-border-radius: 4px; border-radius: 4px; color: white; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); background-color: #49afcd; background-image: -moz-linear-gradient(top,#5BC0DE, #2F96B4 );">Estado Final de Selección</h1>
+
+{% endblock %}
+
+{% block contenido %}
+
+<h3 align = "center" style = "color: #0000FF;"> Artículos aceptados: </h3>
+<table>
+    <tr>
+        <td align="center" width="50%" bgcolor="#c0c0c0"><strong> ID </strong></td>
+        <td align="center" width="50%" bgcolor="#c0c0c0"><strong> Título </strong></td>
+    <tr>
+    {% for item in aceptados %}
+    <tr>
+        <td>{{item.id_articulo}}</td>
+        <td>{{item.titulo}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% if tam_acept_especiales != 0 %}
+<h3 align = "center" style = "color: #0000FF;"> Artículos aceptados especiales: </h3>
+<table>
+    <tr>
+        <td align="center" width="50%" bgcolor="#c0c0c0"><strong> ID </strong></td>
+        <td align="center" width="50%" bgcolor="#c0c0c0"><strong> Título </strong></td>
+    <tr>
+    {% for item in aceptados_especiales %}
+    <tr>
+        <td>{{item.id_articulo}}</td>
+        <td>{{item.titulo}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+
+{% if tam_rec_promedios != 0 %}
+<h3 align = "center" style = "color: #0000FF;"> Artículos rechazados por promedio: </h3>
+<table>
+    <tr>
+        <td align="center" width="50%" bgcolor="#c0c0c0"><strong> ID </strong></td>
+        <td align="center" width="50%" bgcolor="#c0c0c0"><strong> Título </strong></td>
+    <tr>
+    {% for item in rechazados_promedio %}
+    <tr>
+        <td>{{item.id_articulo}}</td>
+        <td>{{item.titulo}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% if tam_rec_falta_cupo != 0 %}
+<h3 align = "center" style = "color: #0000FF;"> Artículos rechazados por falta de cupo: </h3>
+<table>
+    <tr>
+        <td align="center" width="50%" bgcolor="#c0c0c0"><strong> ID </strong></td>
+        <td align="center" width="50%" bgcolor="#c0c0c0"><strong> Título </strong></td>
+    <tr>
+    {% for item in rechazados_falta_cupo %}
+    <tr>
+        <td>{{item.id_articulo}}</td>
+        <td>{{item.titulo}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}
