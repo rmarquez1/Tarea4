@@ -83,6 +83,8 @@ class CLEI():
     def limpiar_empatados(self):
         self.empatados = []
         
+    # Metodo que asigna false a los articulos que tienen el atributo falta 
+    # cupo True
     def limpiar_falta_cupo(self):
 	    articulos = Articulo.objects.filter(rechazado_falta_cupo = True)
 	    for i in range(len(articulos)):
@@ -221,7 +223,7 @@ class CLEI():
         else:
             return self.num_articulos    
 
-	
+	# Metodo que almacena en una lista los articulos aceptados
     def guardar_aceptados(self):
     	lista = []
     	for i in range(len(self.get_aceptados())):
@@ -233,6 +235,7 @@ class CLEI():
     		  articulos.append(lista[i][0])
     	return articulos
 	
+    # Metodo que almacena en una lista los articulos empatados
     def guardar_empatados(self):
     	lista = []
     	for i in range(len(self.get_empatados())):
