@@ -31,7 +31,8 @@ def nuevo_miembro(request):
     return render_to_response('participante/crear_miembro.html', 
 			      {'formulario':formulario},
 			      context_instance= RequestContext(request))
-    
+   
+   
 def nuevo_autor(request):
     if request.method == 'POST':
 		formulario = AutorForm(request.POST)

@@ -3,7 +3,7 @@
 {% block titulo %}Ingresa al sistema{% endblock %}
 
 {% block encabezado %}
-    <h1 style="display: block; font-size: 20px; padding: 10px; margin-left: 0; -webkit-border-radius: 4px; border-radius: 4px; color: white; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); background-color: #49afcd; background-image: -moz-linear-gradient(top,#5BC0DE, #2F96B4 );">Iniciar</h1>
+    <h1 style="display: block; font-size: 20px; padding: 10px; margin-left: 0; -webkit-border-radius: 4px; border-radius: 4px; color: white; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); background-color: #49afcd; background-image: -moz-linear-gradient(top,#5BC0DE, #2F96B4 );">Registrate</h1>
 {% endblock %}
 
 {% block barraizquierda %}
@@ -18,6 +18,6 @@
 
 	<form id='formulario' method='post' action=''>{% csrf_token %}
 		<table>{{formulario}}</table>
-		<p><input type='submit' value='Ingresar' class="buttons"/></p>
+		<p><input type='submit' value='Registrar' class="buttons"/></p>
 	</form>
 {% endblock %}

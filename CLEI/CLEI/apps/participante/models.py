@@ -1,6 +1,6 @@
 #encoding:utf-8
 from django.db import models
-#from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Persona(models.Model):
@@ -15,14 +15,24 @@ class Persona(models.Model):
 	abstract = True
 	unique_together = ("username", "correo")
 
+
 class Autor(Persona):
     pais = models.CharField(max_length=20)
     
     def __unicode__(self):
 	return str(self.correo)
-	
+
+
+
 class MiembroComite(Persona):
     es_presidente = models.BooleanField()
     
     def __unicode__(self):
 	return str(self.correo)
+
+class Inscrito(Persona):
+    url = models.CharField(max_length=100, unique=False)
+    telefono = models.BigIntegerField( null=True, unique=False)
+
+    def __unicode__(self):
+		return str(self.correo)
