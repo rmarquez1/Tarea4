@@ -1,0 +1,10 @@
+<h1> Programa CLEI 2014 </h1>
+{% if eventos %}
+    <ul>
+    {% for evento in eventos %}
+        <li><a href="/eventos/{{ evento.id }}/">{{ evento.nombre }}</a> <b>Fecha:</b> {{ evento.fecha }} </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No hay eventos disponibles.</p>
+{% endif %}

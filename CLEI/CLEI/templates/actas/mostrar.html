@@ -1,0 +1,37 @@
+<h1> Acta de articulo </h1>
+
+<ul>
+	<li><b>Titulo:</b> {{articulo.titulo}}</li>
+	<li><b>Autores:</b>
+	<ol>
+	{% for autor in articulo.autores %}
+		<li> {{ autor.nombre }} {{ autor.apellido }} </li>
+	</ol>
+	</li>
+	<li><b>Topicos:</b>
+	<ul>
+	{% for topico in articulo.topicos %}
+		<li> {{ topico.nombre_topico}} </li>
+	</ul>
+	</li>
+	<li><b>Resumen:</b>
+		<p> {{ articulo.resumen }} </p>
+	</li>
+	<li><b>Texto:</b>
+		<p> {{ articulo.texto }} </p>
+	</li>
+	<li><b>Palabras clave:</b>
+	<ul>
+		{% if articulo.p1 %}
+			<li> {{ articulo.p1 }} </li>
+		{% if articulo.p2 %}
+			<li> {{ articulo.p2 }} </li>
+		{% if articulo.p3 %}
+			<li> {{ articulo.p3 }} </li>
+		{% if articulo.p4 %}
+			<li> {{ articulo.p4 }} </li>
+		{% if articulo.p5 %}
+			<li> {{ articulo.p5 }} </li>
+	</ul>
+</ul>
+	
