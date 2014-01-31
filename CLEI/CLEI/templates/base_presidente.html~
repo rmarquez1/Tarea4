@@ -38,7 +38,17 @@
 									<li><a href='/articulo/asignar/presidente'>Asignar Puntuaciones</a></li>
 									<li><a href='/privado/clei/presidente/aceptadosEmpatados'>Selección por Desempate</a></li>
 									<li><a href='/privado/clei/presidente/seleccionPais'>Selección Por País</a></li>
-									<li><a href='/privado/clei/presidente/estadoSeleccion'>Estado Final de Selección</a></li>
+									<li><a href='/privado/clei/presidente/seleccionProporcionPais'>Selección por Proporción/País</a></li>
+									<li><a href='/privado/clei/presidente/seleccionProporcionTopico'>Selección por Topico</a></li>
+									<li><a href='/privado/clei/presidente/estadosSeleccion'>Estado Final de Selección</a></li>
+									<li><a href='/evento/calendario'>Fechas de la conferencia</a></li>
+									<li><a href='/evento/social'>Agregar Eventos Sociales</a></li>
+									<li><a href='/evento/simultaneo'>Agregar Eventos de Articulos</a></li>
+									<li><a href='/evento/lista'>Listar Eventos</a></li>
+									<li><a href='/evento/lugar'>Agregar Lugares</a></li> 
+									<li><a href='/evento/lista/asignados'>Lista Asignados</a></li>
+									<li><a href='/evento/lugar/asignar'>Asignar Lugar Eventos/Sociales</a></li>
+									<li><a href='/evento/lugar/asignar_simultaneo'>Asignar Lugar Eventos/Articulos</a></li>
 									<li><a href='/'>Cerrar Sesión</a></li>
 							    </ul>
 							</nav>

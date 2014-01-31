@@ -1,0 +1,44 @@
+{% extends 'base_presidente.html' %}
+
+{% block titulo %}Agregar Evento{% endblock %}
+
+{% block encabezado %}
+    <h1 style="display: block; font-size: 20px; padding: 10px; margin-left: 0; -webkit-border-radius: 4px; border-radius: 4px; color: white; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); background-color: #49afcd; background-image: -moz-linear-gradient(top,#5BC0DE, #2F96B4 );">Agregar Lugar</h1>
+
+{% endblock %}
+
+{% block barraizquierda %}
+<nav>
+  <ul    class="menu">
+ <li><a href='/privado/presidente'>Inicio</a></li>
+	<li><a href='/privado/clei/presidente/cantArticulos'>Cantidad de Artículos</a></li>
+	<li><a href='/articulo/create'>Crear Articulo</a></li>
+	<li><a href='/participante/miembro/create'>Crear Miembros</a></li>
+	<li><a href='/participante/autor/create'>Crear Autores</a></li>
+	<li><a href='/articulo/topico/create'>Crear Tópicos</a></li>
+	<li><a href='/articulo/asignar/presidente'>Asignar Puntuaciones</a></li>
+	<li><a href='/privado/clei/presidente/aceptadosEmpatados'>Selección por Desempate</a></li>
+	<li><a href='/privado/clei/presidente/seleccionPais'>Selección Por País</a></li>
+	<li><a href='/privado/clei/presidente/seleccionProporcionPais'>Selección por Proporción/País</a></li>
+	<li><a href='/privado/clei/presidente/seleccionProporcionTopico'>Selección por Topico</a></li>
+	<li><a href='/privado/clei/presidente/estadosSeleccion'>Estado Final de Selección</a></li>
+	<li><a href='/evento/calendario'>Fechas de la conferencia</a></li>
+	<li><a href='/evento/social'>Agregar Eventos Sociales</a></li>
+	<li><a href='/evento/simultaneo'>Agregar Eventos de Articulos</a></li>
+	<li><a href='/evento/lista'>Listar Eventos</a></li>
+	<li><a href='/evento/lugar'>Agregar Lugares</a></li> 
+	<li><a href='/evento/lugar/asignar'>Asignar Lugar Eventos/Sociales</a></li>
+	<li><a href='/evento/lugar/asignar_simultaneo'>Asignar Lugar Eventos/Articulos</a></li>
+	<li><a href='/'>Cerrar Sesión</a></li>
+</nav>
+{% endblock %}
+
+{% block contenido %}
+
+<form id = "formulario" action="" enctype='multipart/form-data' method="POST">{% csrf_token %}
+	{{ formulario.as_p }}
+	<input type="submit" name ="submit"  value="Agregar Lugar" class="buttons"/>
+	<input type="reset"  value="Limpiar" class="buttons"/>
+</form>
+
+{% endblock %}
