@@ -10,17 +10,18 @@ class ParticipanteTest(TestCase):
         inscrito1 = Inscrito.objects.create(username='daralion', password='daralion', 
                                                                   correo='daralion@gmail.com',nombre='Daralion', 
                                                                   apellido='Astrel',inst_afil='USB', url='', 
-                                                                  telefono='04143124576')
+                                                                  telefono='04143124576', paquete = 'CH')
 
         inscrito2 = Inscrito.objects.create(username='ruunna', password='ruunna', 
                                                                   correo='ruutel@gmail.com',nombre='Ruunna',
                                                                   apellido='Telien', inst_afil='USB', 
-                                                                  telefono='04143124576')
+                                                                  telefono='04143124576', paquete = 'N')
 
         inscrito3 = Inscrito.objects.create(username='anna', password='tklde', 
                                                                   correo='alenner@gmail.com',nombre='Anna', 
                                                                   apellido='Lenner',  inst_afil='USB', 
-                                                                  url='tka.com', telefono='02124563765')
+                                                                  url='tka.com', telefono='02124563765',
+                                                                  paquete = 'TC')
    
             # --------------------------------------------------------------------- 
             # Creando autores

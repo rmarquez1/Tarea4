@@ -37,6 +37,18 @@ class MiembroComite(Persona):
 
 # Clase para el modelo de isncritos. Hereda de Persona
 class Inscrito(Persona):
+    CHARLA = 'CH'
+    TALLERES = 'TA'
+    ACADEMICOS = 'AC'
+    TALLER_CHARLA = 'TC'
+    NINGUNO = 'N'
+    TIPO_PAQUETE = (
+		(NINGUNO, 'Ninguno'),
+		(TALLER_CHARLA, 'Talleres y charlas'),
+		(CHARLA, 'Charla'),
+		(TALLERES, 'Talleres'),
+		(ACADEMICOS, 'Academicos'))
+    paquete = models.CharField(max_length=2, choices = TIPO_PAQUETE, default = NINGUNO)
     url = models.CharField(blank=True, null=True, max_length=100, unique=False)
     telefono = models.BigIntegerField(unique=False)
 
