@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^privado/clei/', include('CLEI.apps.clei.urls')),
     url(r'^evento/', include('CLEI.apps.evento.urls')),
     url(r'^actas/', include('CLEI.apps.actas.urls')),
+    url(r'^eventos/', include('CLEI.apps.eventos.urls')),
 )
 urlpatterns += patterns('',
                (r'^imagenes/(?P<path>.*)$', 'django.views.static.serve',
