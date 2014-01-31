@@ -1,12 +1,12 @@
 #encoding:utf-8
 from django import forms
-from .models import Autor, MiembroComite
+from .models import Autor, MiembroComite, Inscrito
 
 
 class AutorForm(forms.ModelForm):
     class Meta:
 	model = Autor
-	
+
 class MiembroComiteForm(forms.ModelForm):
     class Meta:
 	model = MiembroComite
@@ -21,4 +21,8 @@ class MiembroComiteForm(forms.ModelForm):
 		raise forms.ValidationError("Ya existe Presidente en el comité")
 	
 	return existe
-	
+
+
+class InscritoForm(forms.ModelForm):
+	class Meta:
+		model = Inscrito

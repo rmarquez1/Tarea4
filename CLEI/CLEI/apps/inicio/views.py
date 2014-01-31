@@ -8,6 +8,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 
 from CLEI.apps.participante.models import Autor, MiembroComite
+from CLEI.apps.participante.forms import AutorForm, InscritoForm
 
 # Create your views here.
 def inicio(request):
@@ -45,6 +46,17 @@ def ingresar(request):
     else:
         formulario = AuthenticationForm()
     return render_to_response('inicio/ingresar.html',{'formulario':formulario}, context_instance=RequestContext(request))
+
+def registrar(request):
+    if request.method == 'POST':
+		formulario = InscritoForm(request.POST)
+		if formulario.is_valid():
+		    formulario.save()
+		    return HttpResponseRedirect('/')
+    else:
+		formulario = InscritoForm()
+    return render_to_response('inicio/registrar.html',{'formulario':formulario}, context_instance=RequestContext(request))
+
 
 @login_required(login_url='/ingresar')
 def privado_presidente(request):

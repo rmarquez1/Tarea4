@@ -1172,3 +1172,4 @@ class CleiTest(TestCase):
         self.assertEquals(aceptados[0].id_articulo, 7)
         self.assertEquals(rechazados_promedio[0].id_articulo, 4) 
         self.assertEquals(rechazados_falta_cupo[0].id_articulo, 1)     
+
