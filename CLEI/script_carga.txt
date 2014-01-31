@@ -82,24 +82,3 @@ p = Articulo(id_articulo=6, titulo='Lenguaje de programación', resumen='Resumen
              texto='Texto', autores='lgonzalez@gmail.com', topicos='Informática',
              p1='lenguaje', p2='programación')
 p.save()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

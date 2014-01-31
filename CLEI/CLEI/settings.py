@@ -43,7 +43,9 @@ INSTALLED_APPS = (
     'CLEI.apps.articulo',
     'CLEI.apps.participante',
     'CLEI.apps.clei',
-    'CLEI.apps.evento'
+    'CLEI.apps.evento',
+    'CLEI.apps.eventos',
+    'CLEI.apps.actas',
 )
 
 MIDDLEWARE_CLASSES = (
