@@ -31,8 +31,8 @@ class MiembroComite(Persona):
 	return str(self.correo)
 
 class Inscrito(Persona):
-    url = models.CharField(max_length=100, unique=False)
-    telefono = models.BigIntegerField( null=True, unique=False)
+    url = models.CharField(blank=True, null=True, max_length=100, unique=False)
+    telefono = models.BigIntegerField(unique=False)
 
     def __unicode__(self):
 		return str(self.correo)

@@ -3,21 +3,3 @@ from django.test import TestCase
 # Create your tests here.
 from CLEI.apps.clei.clei import Clei
 from CLEI.apps.participante.models import Autor, MiembroComite
-
-
-
-class CleiTest(TestCase):
-# Test de listar los paises participantes en la conferencia
-    def test_paises_conferencia(self):
-        clei = Clei()
-        clei.crear_articulos()
-        
-        clei.set_aceptables(1,4.5)
-        clei.set_aceptables(2,4)
-        clei.set_aceptables(3,3)
-        clei.set_aceptables(4,5)
-        clei.set_aceptables(5,4.5)
-        clei.set_aceptables(6,4.5)
-        
-        lista_paises = clei.paises_conferencia()
-        self.assertEquals('Venezuela', lista_paises[0])
