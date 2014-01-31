@@ -1,4 +1,4 @@
-from eventos.models import Evento
+from apps.eventos.models import Evento
 from django.contrib import admin
 
 class EventoAdmin(admin.ModelAdmin):

@@ -1,5 +1,5 @@
 from django.template import Context, loader
-from eventos.models import Evento
+from apps.eventos.models import Evento
 from django.http import HttpResponse
 
 def generar_programa(request):
