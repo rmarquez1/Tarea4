@@ -4,6 +4,7 @@ from django.template import RequestContext
 
 from .forms import ArticuloForm, TopicoForm, PuntuacionForm
 from .models import Articulo
+from CLEI.apps.participante.models import MiembroComite
 
 # Create your views here.
 def nuevo_articulo(request):
@@ -30,8 +31,15 @@ def asignar_puntuacion_presidente(request):
     if request.method == 'POST':
 		formulario = PuntuacionForm(request.POST)
 		if formulario.is_valid():
-		    formulario.save()
-		    return HttpResponseRedirect('/articulo/asignar/presidente')
+			id = request.POST["correo"]
+			usuario = MiembroComite.objects.filter(id=id)[0].username
+			esta_autenticado = str(request.user) == usuario
+			print esta_autenticado
+			if esta_autenticado:
+			    formulario.save()
+			return render_to_response('articulo/resultado_puntuacion_presidente.html', 
+			  		         {'esta_autenticado': esta_autenticado},
+				      		  context_instance= RequestContext(request))
     else:
 		formulario = PuntuacionForm()
     return render_to_response('articulo/asignar_puntuacion_presidente.html', {'formulario':formulario}, context_instance= RequestContext(request))
@@ -41,8 +49,15 @@ def asignar_puntuacion_miembro(request):
     if request.method == 'POST':
 		formulario = PuntuacionForm(request.POST)
 		if formulario.is_valid():
-		    formulario.save()
-		    return HttpResponseRedirect('/articulo/asignar/miembro')
+			id = request.POST["correo"]
+			usuario = MiembroComite.objects.filter(id=id)[0].username
+			esta_autenticado = str(request.user) == usuario
+			print esta_autenticado
+			if esta_autenticado:
+			    formulario.save()
+			return render_to_response('articulo/resultado_puntuacion_miembro.html', 
+			  		         {'esta_autenticado': esta_autenticado},
+				      		  context_instance= RequestContext(request))
     else:
 		formulario = PuntuacionForm()
     return render_to_response('articulo/asignar_puntuacion_miembro.html', {'formulario':formulario}, context_instance= RequestContext(request))

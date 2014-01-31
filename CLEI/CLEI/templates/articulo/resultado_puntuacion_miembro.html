@@ -9,10 +9,12 @@
 
 {% block contenido %}
 
-<form id = "formulario" action="" enctype='multipart/form-data' method="POST">{% csrf_token %}
-	{{ formulario.as_p }}
-	<input type="submit" name="submit" value="Asignar Puntuación" class="buttons"/>
-	<input type="reset" value="Limpiar" class="buttons"/>
-</form>
+{% if esta_autenticado %}
+<font color="green"><strong> Puntuación realizada satisfactoriamente</strong></font>
+{% endif %}
+
+{% if not esta_autenticado%}
+<font color="red"><strong> El correo seleccionado no pertenece al suyo</strong></font>
+{% endif %}
 
 {% endblock %}

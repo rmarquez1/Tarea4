@@ -10,10 +10,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Autor, MiembroComite
 from .forms import AutorForm, MiembroComiteForm
 # Create your views here.
-#def usuarios(request):
-    #usuarios = User.objects.all()
-    #return render_to_response('participante/usuarios.html',{'usuarios':usuarios}, context_instance=RequestContext(request))
 
+# Vista donde se registran los miembros del comite
 def nuevo_miembro(request):
     if request.method == 'POST':
 		formulario = MiembroComiteForm(request.POST)
@@ -31,7 +29,8 @@ def nuevo_miembro(request):
     return render_to_response('participante/crear_miembro.html', 
 			      {'formulario':formulario},
 			      context_instance= RequestContext(request))
-    
+   
+# Vista donde se registran los autores
 def nuevo_autor(request):
     if request.method == 'POST':
 		formulario = AutorForm(request.POST)

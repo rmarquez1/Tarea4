@@ -21,6 +21,9 @@ class CLEI():
     def get_num_articulos(self):
 	   return self.num_articulos
 
+    def get_articulos(self):
+        return self.articulos
+
     # Metodo que retorna la lista de aceptables
     def get_aceptables(self):
         return self.aceptables
@@ -80,6 +83,8 @@ class CLEI():
     def limpiar_empatados(self):
         self.empatados = []
         
+    # Metodo que asigna false a los articulos que tienen el atributo falta 
+    # cupo True
     def limpiar_falta_cupo(self):
 	    articulos = Articulo.objects.filter(rechazado_falta_cupo = True)
 	    for i in range(len(articulos)):
@@ -96,6 +101,7 @@ class CLEI():
                 lista.append(puntuacion[i].puntuacion)
     	return lista
   
+    # Metodo que agrega las evaluaciones de los articulos
     def agregar_evaluaciones(self):
         promedio = 0
         articulos = Articulo.objects.all()
@@ -217,7 +223,7 @@ class CLEI():
         else:
             return self.num_articulos    
 
-	
+	# Metodo que almacena en una lista los articulos aceptados
     def guardar_aceptados(self):
     	lista = []
     	for i in range(len(self.get_aceptados())):
@@ -229,6 +235,7 @@ class CLEI():
     		  articulos.append(lista[i][0])
     	return articulos
 	
+    # Metodo que almacena en una lista los articulos empatados
     def guardar_empatados(self):
     	lista = []
     	for i in range(len(self.get_empatados())):
@@ -310,9 +317,7 @@ class CLEI():
         for i in range(tam_lista):
             # Obtenemos una lista con los articulos del pais en la posicion i
             lista_notas_por_pais = self.listar_notas_por_pais(lista[i])
-            #print 'pais: ', lista[i], ' lista notas: ', lista_notas_por_pais
             tam_lista_pais = len(lista_notas_por_pais)
-            #print tam_lista_pais
             # Si la cantidad de articulos del pais es mayor o igual al minimo 
             # de articulos por pais
             if tam_lista_pais >= num_articulos_por_pais:
@@ -351,7 +356,6 @@ class CLEI():
                 
             t = (lista_paises[i][0], l)
             lista_min.append(t)
-        #print 'Lista_ PAISES: ', lista_paises
         return lista_min
 
     # Tipo de seleccion por pais
@@ -381,8 +385,6 @@ class CLEI():
         for i in range(tam_paises):
             # Generamos una lista con los articulos representados del pais i
             lista = self.listar_notas_por_pais(lista_articulos[i][0])
-            #print 'lista articulos: '
-            #print lista
             l = []
             tam = len(lista)
             # Ciclo que construye una lista con aquellos paises y sus articulos
@@ -407,7 +409,6 @@ class CLEI():
     def seleccionar_por_pais(self, num_articulos_por_pais):
         lista_no_aceptados = self.listar_no_aceptados(num_articulos_por_pais)
         tam_lista = len(lista_no_aceptados)
-        print 'lista no aceptados: ', lista_no_aceptados
         for i in range(tam_lista):
             promedios = self.listar_promedios(lista_no_aceptados[i][1])
             self.crear_aceptados_empatados(promedios, lista_no_aceptados[i][1])

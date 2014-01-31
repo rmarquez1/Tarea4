@@ -2,13 +2,15 @@
 from django.db import models
 from CLEI.apps.participante.models import Autor, MiembroComite
 
+# Clase para el modelo de topicos
 class Topico(models.Model):
     nombre_topico = models.CharField(max_length=50, primary_key=True, verbose_name='Nombre del Tópico')
     
     def __unicode__(self):
 	return self.nombre_topico
 	
-# Create your models here.
+
+# Clase para el modelo de articulos
 class Articulo(models.Model):
     id_articulo = models.IntegerField(primary_key=True)
     titulo = models.CharField(max_length=100, verbose_name='Título', help_text='Título del artículo')
@@ -25,13 +27,12 @@ class Articulo(models.Model):
     p3 = models.CharField(max_length=30, verbose_name = 'Palabra Clave 3', blank=True)
     p4 = models.CharField(max_length=30, verbose_name = 'Palabra Clave 4', blank=True)
     p5 = models.CharField(max_length=30, verbose_name = 'Palabra Clave 5', blank=True)
-    # COLOCAR ESTADOS DE SELECCION
-    
-
-		    
+	    
     def __unicode__(self):
 	return str(self.id_articulo)
-	
+
+
+# Clase para el modelo de puntuaciones a los articulos	
 class Puntuacion(models.Model):
     correo = models.ForeignKey(MiembroComite)
     id_articulo = models.ForeignKey(Articulo)
